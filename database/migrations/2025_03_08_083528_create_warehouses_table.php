@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('warehouses', function (Blueprint $table) {
             $table->id();
+            $table->string('code')->unique();
             $table->string('name');
             $table->string('location');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
