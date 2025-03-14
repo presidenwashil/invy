@@ -1,0 +1,15 @@
+{
+    "name": "Laravel 11 + Filament",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "workspace",
+    "workspaceFolder": "/var/www/html",
+    "extensions": [
+        "ms-azuretools.vscode-docker",
+        "ms-vscode-remote.remote-containers",
+        "ms-vscode.cpptools",
+        "dbaeumer.vscode-eslint",
+        "bmewburn.vscode-intelephense-client",
+        "amiralizadeh9480.laravel-extra-intellisense"
+    ],
+    "postCreateCommand": "composer install && npm install && php artisan migrate --seed"
+}
