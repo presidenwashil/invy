@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UnitResource\Pages;
-use App\Filament\Resources\UnitResource\RelationManagers;
-use App\Models\Unit;
+use App\Filament\Resources\ShipmentResource\Pages;
+use App\Filament\Resources\ShipmentResource\RelationManagers;
+use App\Models\Shipment;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class UnitResource extends Resource
+class ShipmentResource extends Resource
 {
-    protected static ?string $model = Unit::class;
+    protected static ?string $model = Shipment::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -23,10 +23,18 @@ class UnitResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('code')
+                Forms\Components\TextInput::make('product_id')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('quantity')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\DatePicker::make('shipment_date')
                     ->required(),
-                Forms\Components\TextInput::make('name')
-                    ->required(),
+                Forms\Components\TextInput::make('shipped_by')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('proof_of_delivery'),
             ]);
     }
 
@@ -34,14 +42,20 @@ class UnitResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('code')
+                Tables\Columns\TextColumn::make('product_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('quantity')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('shipment_date')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('shipped_by')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('proof_of_delivery')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -52,7 +66,7 @@ class UnitResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\TrashedFilter::make(),
+                //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -60,8 +74,6 @@ class UnitResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ]);
     }
@@ -76,17 +88,9 @@ class UnitResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUnits::route('/'),
-            'create' => Pages\CreateUnit::route('/create'),
-            'edit' => Pages\EditUnit::route('/{record}/edit'),
+            'index' => Pages\ListShipments::route('/'),
+            'create' => Pages\CreateShipment::route('/create'),
+            'edit' => Pages\EditShipment::route('/{record}/edit'),
         ];
-    }
-
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
     }
 }

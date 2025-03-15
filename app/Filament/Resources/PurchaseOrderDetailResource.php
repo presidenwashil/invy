@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CategoryResource\Pages;
-use App\Filament\Resources\CategoryResource\RelationManagers;
-use App\Models\Category;
+use App\Filament\Resources\PurchaseOrderDetailResource\Pages;
+use App\Filament\Resources\PurchaseOrderDetailResource\RelationManagers;
+use App\Models\PurchaseOrderDetail;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,20 +13,25 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class CategoryResource extends Resource
+class PurchaseOrderDetailResource extends Resource
 {
-    protected static ?string $model = Category::class;
+    protected static ?string $model = PurchaseOrderDetail::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-tag';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('code')
-                    ->required(),
-                Forms\Components\TextInput::make('name')
-                    ->required(),
+                Forms\Components\TextInput::make('purchase_order_id')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('product_id')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('quantity')
+                    ->required()
+                    ->numeric(),
             ]);
     }
 
@@ -34,10 +39,15 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('code')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('purchase_order_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('product_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('quantity')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
@@ -76,9 +86,9 @@ class CategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCategories::route('/'),
-            'create' => Pages\CreateCategory::route('/create'),
-            'edit' => Pages\EditCategory::route('/{record}/edit'),
+            'index' => Pages\ListPurchaseOrderDetails::route('/'),
+            'create' => Pages\CreatePurchaseOrderDetail::route('/create'),
+            'edit' => Pages\EditPurchaseOrderDetail::route('/{record}/edit'),
         ];
     }
 
