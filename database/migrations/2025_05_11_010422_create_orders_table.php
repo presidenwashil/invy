@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('order_date');
             $table->decimal('total_price', 10, 2);
             $table->enum('status', ['cancelled', 'completed', 'pending', 'processing'])->default('pending');
+            $table->string('upload')->nullable();
             $table->timestamps();
         });
     }

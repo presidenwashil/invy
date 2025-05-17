@@ -25,7 +25,22 @@ class OrderResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('order_number')
                     ->required()
-                    ->afterStateUpdated(fn ($state, callable $set) => $set('order_number', strtoupper($state))),
+                    ->default(function () {
+                        $today = now()->format('Ymd');
+                        $prefix = 'SPM' . $today;
+
+                        $latest = Order::whereDate('created_at', now())
+                            ->where('order_number', 'like', $prefix . '%')
+                            ->latest('id')
+                            ->first();
+
+                        $lastNumber = $latest
+                            ? (int) substr($latest->order_number, -3)
+                            : 0;
+
+                        return $prefix . str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
+                    })
+                    ->readonly(),
                 Forms\Components\Select::make('supplier_id')
                     ->relationship('supplier', 'name')
                     ->required()
@@ -111,6 +126,7 @@ class OrderResource extends Resource
                     ->afterStateUpdated(function ($state, callable $set) {
                         $set('total_price', collect($state)->sum('total_price') ?? 0);
                     }),
+                Forms\Components\FileUpload::make('upload'),
             ]);
     }
 
@@ -120,11 +136,10 @@ class OrderResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('order_number')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('supplier_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('supplier.name')
+                    ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('user_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('user.name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('order_date')
                     ->date()
@@ -148,6 +163,10 @@ class OrderResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                // Tables\Actions\Action::make('generate_pdf')
+                //     ->label('Generate PDF')
+                //     ->url(fn (Order $record) => route('orders.pdf', ['orderId' => $record->id]))
+                //     ->icon('heroicon-o-document-text'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

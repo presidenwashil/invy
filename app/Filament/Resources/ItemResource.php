@@ -37,7 +37,7 @@ class ItemResource extends Resource
                 Forms\Components\TextInput::make('price')
                     ->required()
                     ->numeric()
-                    ->prefix('$'),
+                    ->prefix('Rp.'),
                 Forms\Components\Toggle::make('status')
                     ->required(),
                 Forms\Components\Select::make('unit_id')
@@ -65,7 +65,7 @@ class ItemResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('price')
                     ->translateLabel()
-                    ->money()
+                    ->money('IDR')
                     ->sortable(),
                 Tables\Columns\IconColumn::make('status')
                     ->translateLabel()
