@@ -7,12 +7,18 @@ use App\Models\Category;
 use App\Models\Supplier;
 use App\Models\Unit;
 use App\Models\Item;
+use App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // Seed Categories
+        
+        User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+        ]);
+
         $categories = [
             ['code' => 'CAT001', 'name' => 'Elektronik'],
             ['code' => 'CAT002', 'name' => 'ATK'],
