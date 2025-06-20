@@ -97,7 +97,7 @@ class OrderResource extends Resource
                         Forms\Components\Select::make('unit_id')
                             ->relationship('unit', 'name')
                             ->required()
-                            ->disabled() 
+                            ->disabled()
                             ->dehydrated(true)
                             ->preload(),
                         Forms\Components\TextInput::make('quantity')

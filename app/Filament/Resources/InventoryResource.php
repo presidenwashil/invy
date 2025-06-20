@@ -47,6 +47,11 @@ class InventoryResource extends Resource
                     ->displayFormat('Y-m-d')
                     ->default(now())
                     ->native(false),
+                Forms\Components\TextInput::make('production_year')
+                    ->nullable()
+                    ->numeric()
+                    ->maxLength(4)
+                    ->placeholder('e.g. 2023'),
                 Forms\Components\Select::make('status')
                     ->required()
                     ->options([
