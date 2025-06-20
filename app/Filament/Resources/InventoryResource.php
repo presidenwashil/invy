@@ -28,11 +28,25 @@ class InventoryResource extends Resource
                 Forms\Components\Select::make('item_id')
                     ->required()
                     ->relationship('item', 'name')
-                    ->preload(),
+                    ->preload()
+                    ->searchable(),
                 Forms\Components\Select::make('warehouse_id')
                     ->required()
                     ->relationship('warehouse', 'name')
+                    ->searchable()
                     ->preload(),
+                Forms\Components\TextInput::make('serial_number')
+                    ->nullable(),
+                Forms\Components\TextInput::make('brand')
+                    ->nullable(),
+                Forms\Components\Textarea::make('specification')
+                    ->nullable()
+                    ->rows(3),
+                Forms\Components\DatePicker::make('purchase_date')
+                    ->nullable()
+                    ->displayFormat('Y-m-d')
+                    ->default(now())
+                    ->native(false),
                 Forms\Components\Select::make('status')
                     ->required()
                     ->options([
@@ -43,7 +57,8 @@ class InventoryResource extends Resource
                         'maintanance' => 'Maintanance',
                     ])
                     ->default('available')
-                    ->preload(),
+                    ->preload()
+                    ->native(false),
             ]);
     }
 
@@ -61,6 +76,16 @@ class InventoryResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('serial_number')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('brand')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('specification')
+                    ->searchable()
+                    ->limit(50),
+                Tables\Columns\TextColumn::make('purchase_date')
+                    ->date()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
