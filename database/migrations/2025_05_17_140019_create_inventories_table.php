@@ -16,6 +16,11 @@ return new class extends Migration
             $table->string('inventory_number')->unique();
             $table->foreignId('item_id')->constrained()->cascadeOnDelete();
             $table->foreignId('warehouse_id')->constrained()->cascadeOnDelete();
+            $table->string('serial_number')->nullable();
+            $table->string('brand')->nullable();
+            $table->text('specification')->nullable();
+            $table->date('purchase_date')->nullable();
+            $table->string('production_year')->nullable();
             $table->enum('status', ['available', 'damaged', 'lost', 'borrowed', 'maintanance'])->default('available');
             $table->timestamps();
         });
