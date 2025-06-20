@@ -30,8 +30,7 @@ class CreateInventory extends CreateRecord
             ]);
         }
 
-        $inventory = $this->record;
-        $item = Item::find($inventory->item_id);
+        $item = Item::find($this->data['item_id']);
 
         ItemHistory::create([
             'item_id' => $item->id,
