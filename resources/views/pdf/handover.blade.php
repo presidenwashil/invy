@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        * {
+            font-family: sans-serif; font-size: 12pt;
+        }
+        body { font-family: sans-serif; font-size: 12px; }
+        .header { text-align: center; }
+        .logo { width: 80px; position: absolute; top: 10px; left: 10px; }
+        .kop { width: 100%;}
+        .title { text-align: center; font-weight: bold; margin-top: 20px; text-decoration: underline; }
+        .table, .table th, .table td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+        .signature { margin-top: 50px; width: 100%; }
+        .signature td { padding: 10px; vertical-align: top; }
+    </style>
+</head>
+<body>
+
+    <img src="{{ public_path('images/kop-surat.png') }}" class="kop" alt="Kop Surat">
+
+    <div class="title">
+        BERITA ACARA SERAH TERIMA BARANG<br>
+        Nomor : 00 / BAST/XII/2024
+    </div>
+
+
+
+<p>   
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pada hari ini senin tanggal empat bulan november tahun dua ribu dua puluh empat, yang bertanda tangan di bawah ini :
+</p>
+
+    <table>
+        <tr>
+            <td>I.</td>
+            <td>Nama</td>
+            <td>:</td>
+            <td>Fadliansyah</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>NIP</td>
+            <td>:</td>
+            <td>197412142007011010</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Jabatan</td>
+            <td>:</td>
+            <td>Pengurus Barang Pembantu</td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td></td>
+            <td>
+                Yang Selanjutnya disebut <strong>PIHAK PERTAMA</strong>
+            </td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <td>II.</td>
+            <td>Nama</td>
+            <td>:</td>
+            <td>{{ $handover->staff->name }}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>NIP</td>
+            <td>:</td>
+            <td>{{ $handover->staff->nip }}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Jabatan</td>
+            <td>:</td>
+            <td>Pengurus Barang Utama</td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td></td>
+            <td>
+                Dalam hal ini selanjutnya disebut <strong>PIHAK KEDUA</strong>
+            </td>
+        </tr>
+    </table>
+<p>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dengan ini <strong>PIHAK PERTAMA</strong> menyerahkan kepada <strong>PIHAK KEDUA</strong> dan <strong>PIHAK KEDUA</strong> menerima barang dari <strong>PIHAK PERTAMA</strong> sebagai berikut :
+</p>
+
+    <table class="table" width="100%">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Nama Barang</th>
+                <th>Spesifikasi</th>
+                <th>Jumlah</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @foreach ($handover->details as $item)
+                    <td align="center">{{ $loop->iteration }}</td>
+                    <td>{{ $item->inventory->item->name }} {{ $item->inventory->brand }} </td>
+                    <td>{{ $item->inventory->specification }}</td>
+                    <td align="center">{{ $item->count() }} Unit</td>
+                @endforeach
+            </tr>
+        </tbody>
+    </table>
+
+    <br><br>
+    <table class="signature">
+        <tr>
+            <td align="center">
+                PIHAK PERTAMA<br><br><br><br><br>
+                <u>Fadliansyah</u><br>
+                NIP. 197412142007011010
+            </td>
+            <td align="center">
+                PIHAK KEDUA<br><br><br><br><br>
+                <u>{{ $handover->staff->name }}</u><br>
+                NIP. {{ $handover->staff->nip }}
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

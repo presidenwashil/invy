@@ -13,6 +13,11 @@ class EditHandover extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
+            Actions\Action::make('exportPdf')
+                ->label('Export PDF')
+                ->icon('heroicon-o-document-text')
+                ->url(fn () => route('handover.pdf', ['record' => $this->record->id]))
+                ->openUrlInNewTab(),
             Actions\DeleteAction::make(),
             Actions\ForceDeleteAction::make(),
             Actions\RestoreAction::make(),
