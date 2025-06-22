@@ -7,7 +7,6 @@ use App\Models\Order;
 use Awcodes\TableRepeater\Components\TableRepeater;
 use Awcodes\TableRepeater\Header;
 use Filament\Forms;
-use Filament\Forms\Components\Repeater;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -27,10 +26,10 @@ class OrderResource extends Resource
                     ->required()
                     ->default(function () {
                         $today = now()->format('Ymd');
-                        $prefix = 'SPM' . $today;
+                        $prefix = 'SPM'.$today;
 
                         $latest = Order::whereDate('created_at', now())
-                            ->where('order_number', 'like', $prefix . '%')
+                            ->where('order_number', 'like', $prefix.'%')
                             ->latest('id')
                             ->first();
 
@@ -38,7 +37,7 @@ class OrderResource extends Resource
                             ? (int) substr($latest->order_number, -3)
                             : 0;
 
-                        return $prefix . str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
+                        return $prefix.str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
                     })
                     ->readonly(),
                 Forms\Components\Select::make('supplier_id')
@@ -119,7 +118,7 @@ class OrderResource extends Resource
                             ->afterStateHydrated(function ($state, callable $set, $get) {
                                 $set('total_price', $get('price') * $get('quantity'));
                             })
-                            ->dehydrated(true)
+                            ->dehydrated(true),
 
                     ])
                     ->columnSpan('full')

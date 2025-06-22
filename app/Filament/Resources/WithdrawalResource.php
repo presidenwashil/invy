@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\WithdrawalResource\Pages;
-use App\Filament\Resources\WithdrawalResource\RelationManagers;
 use App\Models\Withdrawal;
 use Awcodes\TableRepeater\Components\TableRepeater;
 use Awcodes\TableRepeater\Header;
@@ -14,8 +13,6 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class WithdrawalResource extends Resource
 {
@@ -28,7 +25,7 @@ class WithdrawalResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('withdrawal_number')
-                    ->default(fn () => 'WDL' . now()->format('Ymd') . str_pad((Withdrawal::count() + 1), 3, '0', STR_PAD_LEFT))
+                    ->default(fn () => 'WDL'.now()->format('Ymd').str_pad((Withdrawal::count() + 1), 3, '0', STR_PAD_LEFT))
                     ->readonly()
                     ->required(),
                 Forms\Components\Select::make('warehouse_id')

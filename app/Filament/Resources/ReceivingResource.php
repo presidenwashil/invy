@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ReceivingResource\Pages;
-use App\Filament\Resources\ReceivingResource\RelationManagers;
-use App\Models\OrderDetail;
 use App\Models\Receiving;
 use Awcodes\TableRepeater\Components\TableRepeater;
 use Awcodes\TableRepeater\Header;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -20,8 +17,6 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ReceivingResource extends Resource
 {
@@ -37,10 +32,10 @@ class ReceivingResource extends Resource
                     ->required()
                     ->default(function () {
                         $today = now()->format('Ymd');
-                        $prefix = 'PNM' . $today;
+                        $prefix = 'PNM'.$today;
 
                         $latest = Receiving::whereDate('created_at', now())
-                            ->where('receiving_number', 'like', $prefix . '%')
+                            ->where('receiving_number', 'like', $prefix.'%')
                             ->latest('id')
                             ->first();
 
@@ -48,7 +43,7 @@ class ReceivingResource extends Resource
                             ? (int) substr($latest->receiving_number, -3)
                             : 0;
 
-                        return $prefix . str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
+                        return $prefix.str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
                     })
                     ->readonly(),
                 Select::make('order_id')
@@ -61,8 +56,9 @@ class ReceivingResource extends Resource
                         // Ambil detail dari order terpilih
                         $order = \App\Models\Order::with('details.item')->find($state);
 
-                        if (!$order) {
+                        if (! $order) {
                             $set('details', []);
+
                             return;
                         }
 
@@ -114,7 +110,9 @@ class ReceivingResource extends Resource
                     ])
                     ->default(function (callable $get) {
                         $order = \App\Models\Order::with('details.item')->find($get('order_id'));
-                        if (!$order) return [];
+                        if (! $order) {
+                            return [];
+                        }
 
                         return $order->details->map(function ($detail) {
                             return [

@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ItemHistoryResource\Pages;
-use App\Filament\Resources\ItemHistoryResource\RelationManagers;
 use App\Models\ItemHistory;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ItemHistoryResource extends Resource
 {

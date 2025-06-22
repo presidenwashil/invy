@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('loan_id')->constrained()->cascadeOnDelete();
             $table->foreignId('inventory_id')->constrained()->cascadeOnDelete();
             $table->date('returned_at')->nullable();
-            $table->enum('loan_status', ['loaned', 'returned',])->default('loaned');
+            $table->enum('loan_status', ['loaned', 'returned'])->default('loaned');
             $table->timestamps();
         });
     }

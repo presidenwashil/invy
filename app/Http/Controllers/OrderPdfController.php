@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Http\Request;
 
 class OrderPdfController extends Controller
 {
@@ -14,7 +13,7 @@ class OrderPdfController extends Controller
         $order = Order::with('details.item')->find($orderId);
 
         // Jika order tidak ditemukan, return error
-        if (!$order) {
+        if (! $order) {
             return redirect()->back()->with('error', 'Order not found!');
         }
 
@@ -25,6 +24,6 @@ class OrderPdfController extends Controller
         $pdf = Pdf::loadView('pdf.order', $data);
 
         // Download PDF
-        return $pdf->download('order_' . $order->order_number . '.pdf');
+        return $pdf->download('order_'.$order->order_number.'.pdf');
     }
 }

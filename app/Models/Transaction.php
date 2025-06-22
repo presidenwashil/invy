@@ -16,7 +16,7 @@ class Transaction extends Model
         parent::boot();
 
         static::creating(function ($transaction) {
-            $transaction->reference_number = 'TRX-' . strtoupper(Str::random(8));
+            $transaction->reference_number = 'TRX-'.strtoupper(Str::random(8));
         });
     }
 

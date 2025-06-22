@@ -4,7 +4,6 @@ namespace App\Filament\Resources\ReceivingResource\Pages;
 
 use App\Filament\Resources\ReceivingResource;
 use App\Models\ItemHistory;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateReceiving extends CreateRecord

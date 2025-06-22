@@ -5,7 +5,6 @@ namespace App\Filament\Resources\InventoryResource\Pages;
 use App\Filament\Resources\InventoryResource;
 use App\Models\Item;
 use App\Models\ItemHistory;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Validation\ValidationException;
@@ -18,7 +17,7 @@ class CreateInventory extends CreateRecord
     {
         $item = Item::find($this->data['item_id']);
 
-        if (!$item || $item->stock <= 0) {
+        if (! $item || $item->stock <= 0) {
             Notification::make()
                 ->title('Insufficient stock')
                 ->body('The item stock is insufficient to create this inventory.')

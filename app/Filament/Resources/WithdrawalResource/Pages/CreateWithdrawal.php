@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\WithdrawalResource\Pages;
 
 use App\Filament\Resources\WithdrawalResource;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateWithdrawal extends CreateRecord
@@ -27,5 +26,4 @@ class CreateWithdrawal extends CreateRecord
             $detail->item->decrement('stock', $detail->quantity);
         }
     }
-
 }

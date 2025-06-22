@@ -10,6 +10,7 @@ class Item extends Model
 {
     /** @use HasFactory<\Database\Factories\ItemFactory> */
     use HasFactory;
+
     use SoftDeletes;
 
     public function category()

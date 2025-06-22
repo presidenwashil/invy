@@ -15,7 +15,7 @@ class OrderDetail extends Model
     {
         return $this->belongsTo(Item::class);
     }
-    
+
     public function unit()
     {
         return $this->belongsTo(Unit::class);

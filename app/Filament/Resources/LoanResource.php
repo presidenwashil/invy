@@ -3,11 +3,9 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\LoanResource\Pages;
-use App\Filament\Resources\LoanResource\RelationManagers;
 use App\Models\Loan;
 use Awcodes\TableRepeater\Components\TableRepeater;
 use Awcodes\TableRepeater\Header;
-use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -16,8 +14,6 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class LoanResource extends Resource
 {
@@ -72,7 +68,6 @@ class LoanResource extends Resource
                     ->columnSpanFull(),
             ]);
     }
-
 
     public static function table(Table $table): Table
     {
