@@ -12,11 +12,17 @@ class DetailsRelationManager extends RelationManager
 {
     protected static string $relationship = 'details';
 
+    public static function getModelLabel(): string
+    {
+        return __('Handover Detail');
+    }
+
     public function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Select::make('inventory_id')
+                    ->label(__('Inventory'))
                     ->required()
                     ->relationship('inventory', 'inventory_number')
                     ->searchable()
@@ -28,13 +34,18 @@ class DetailsRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
+            ->heading(__('Handover Detail'))
             ->columns([
                 Tables\Columns\TextColumn::make('inventory.inventory_number')
-                    ->label(__('Inventory Number'))
+                    ->label(__('Inventory number'))
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('inventory.item.name')
                     ->label(__('Item Name'))
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('inventory.brand')
+                    ->label(__('Brand'))
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('inventory.specification')
@@ -42,7 +53,7 @@ class DetailsRelationManager extends RelationManager
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('inventory.purchase_date')
-                    ->label(__('Purchase Date'))
+                    ->label(__('Purchase date'))
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('inventory.production_year')

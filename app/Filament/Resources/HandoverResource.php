@@ -19,18 +19,31 @@ class HandoverResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getModelLabel(): string
+    {
+        return __('Handover');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Handovers');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Select::make('staff_id')
+                    ->translateLabel()
                     ->required()
                     ->relationship('staff', 'name')
                     ->preload()
                     ->searchable(),
                 Forms\Components\TextInput::make('handover_number')
+                    ->translateLabel()
                     ->required(),
                 Forms\Components\DatePicker::make('handover_date')
+                    ->translateLabel()
                     ->default(now())
                     ->native(false)
                     ->required(),
@@ -41,23 +54,31 @@ class HandoverResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('staff_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('staff.nip')
+                    ->label(__('NIP'))
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('staff.name')
+                    ->label(__('Staff Name'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('handover_number')
+                    ->translateLabel()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('handover_date')
+                    ->translateLabel()
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->translateLabel()
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->translateLabel()
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('deleted_at')
+                    ->translateLabel()
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

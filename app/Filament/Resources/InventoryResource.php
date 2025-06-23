@@ -16,35 +16,53 @@ class InventoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getModelLabel(): string
+    {
+        return __('Inventory');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Inventories');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('inventory_number')
+                    ->translateLabel()
                     ->required(),
                 Forms\Components\Select::make('item_id')
+                    ->label(__('Item'))
                     ->required()
                     ->relationship('item', 'name')
                     ->preload()
                     ->searchable(),
                 Forms\Components\Select::make('warehouse_id')
+                    ->label(__('Warehouse'))
                     ->required()
                     ->relationship('warehouse', 'name')
                     ->searchable()
                     ->preload(),
                 Forms\Components\TextInput::make('serial_number')
+                    ->translateLabel()
                     ->nullable(),
                 Forms\Components\TextInput::make('brand')
+                    ->translateLabel()
                     ->nullable(),
                 Forms\Components\Textarea::make('specification')
+                    ->translateLabel()
                     ->nullable()
                     ->rows(3),
                 Forms\Components\DatePicker::make('purchase_date')
+                    ->translateLabel()
                     ->nullable()
                     ->displayFormat('Y-m-d')
                     ->default(now())
                     ->native(false),
                 Forms\Components\TextInput::make('production_year')
+                    ->translateLabel()
                     ->nullable()
                     ->numeric()
                     ->maxLength(4)
@@ -69,23 +87,30 @@ class InventoryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('inventory_number')
+                    ->translateLabel()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('item.name')
+                    ->label(__('Item Name'))
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('warehouse.name')
+                    ->label(__('Warehouse'))
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('serial_number')
+                    ->translateLabel()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('brand')
+                    ->translateLabel()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('specification')
+                    ->translateLabel()
                     ->searchable()
                     ->limit(50),
                 Tables\Columns\TextColumn::make('purchase_date')
+                    ->translateLabel()
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
