@@ -16,6 +16,16 @@ class ItemHistoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getModelLabel(): string
+    {
+        return __('Item History');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Item Histories');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -48,20 +58,26 @@ class ItemHistoryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('item.name')
+                    ->label(__('Item'))
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('user.name')
+                    ->label(__('User'))
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('type')
+                    ->translateLabel()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('initial_stock')
+                    ->translateLabel()
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('in')
+                    ->translateLabel()
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('out')
+                    ->translateLabel()
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')

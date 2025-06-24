@@ -19,7 +19,17 @@ class LoanResource extends Resource
 {
     protected static ?string $model = Loan::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+
+    public static function getModelLabel(): string
+    {
+        return __('Loan');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Loans');
+    }
 
     public static function form(Form $form): Form
     {
