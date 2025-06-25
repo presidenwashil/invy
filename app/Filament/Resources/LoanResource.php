@@ -36,8 +36,9 @@ class LoanResource extends Resource
         return $form
             ->schema([
                 Select::make('warehouse_id')
-                    ->label('Pemohon')
+                    ->translateLabel()
                     ->relationship('warehouse', 'name')
+                    ->preload()
                     ->searchable()
                     ->required(),
 
@@ -83,9 +84,14 @@ class LoanResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('warehouse.name')->label('Pemohon'),
-                TextColumn::make('loan_date')->date(),
-                TextColumn::make('details_count')->counts('details')->label('Jumlah Barang'),
+                TextColumn::make('warehouse.name')
+                    ->translateLabel(),
+                TextColumn::make('loan_date')
+                    ->translateLabel()
+                    ->date(),
+                TextColumn::make('details_count')
+                    ->translateLabel()
+                    ->counts('details'),
             ])
             ->filters([
                 //

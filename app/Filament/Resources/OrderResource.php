@@ -16,13 +16,24 @@ class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+
+    public static function getModelLabel(): string
+    {
+        return __('Order');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Orders');
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('order_number')
+                    ->translateLabel()
                     ->required()
                     ->default(function () {
                         $today = now()->format('Ymd');
@@ -41,21 +52,25 @@ class OrderResource extends Resource
                     })
                     ->readonly(),
                 Forms\Components\Select::make('supplier_id')
+                    ->translateLabel()
                     ->relationship('supplier', 'name')
                     ->required()
                     ->searchable()
                     ->preload(),
                 Forms\Components\Select::make('user_id')
+                    ->translateLabel()
                     ->relationship('user', 'name')
                     ->default(auth()->id())
                     ->disabled()
                     ->dehydrated(true)
                     ->required(),
                 Forms\Components\DatePicker::make('order_date')
+                    ->translateLabel()
                     ->required()
                     ->default(now())
                     ->native(false),
                 Forms\Components\TextInput::make('total_price')
+                    ->translateLabel()
                     ->readonly()
                     ->numeric()
                     ->dehydrated()
@@ -71,12 +86,18 @@ class OrderResource extends Resource
                     ->native(false)
                     ->required(),
                 TableRepeater::make('details')
+                    ->label(__('Order details'))
                     ->headers([
-                        Header::make('name'),
-                        Header::make('unit'),
-                        Header::make('quantity'),
-                        Header::make('price'),
-                        Header::make('total_price'),
+                        Header::make('name')
+                            ->label(__('Item')),
+                        Header::make('unit')
+                            ->label(__('Unit')),
+                        Header::make('quantity')
+                            ->label(__('Quantity')),
+                        Header::make('price')
+                            ->label(__('Price')),
+                        Header::make('total_price')
+                            ->label(__('Total price')),
                     ])
                     ->relationship()
                     ->schema([
@@ -134,25 +155,32 @@ class OrderResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('order_number')
+                    ->translateLabel()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('supplier.name')
+                    ->translateLabel()
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('user.name')
+                    ->translateLabel()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('order_date')
+                    ->translateLabel()
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('total_price')
+                    ->translateLabel()
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->translateLabel()
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->translateLabel()
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
