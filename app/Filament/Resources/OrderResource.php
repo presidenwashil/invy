@@ -51,12 +51,6 @@ class OrderResource extends Resource
                         return $prefix.str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
                     })
                     ->readonly(),
-                Forms\Components\Select::make('supplier_id')
-                    ->translateLabel()
-                    ->relationship('supplier', 'name')
-                    ->required()
-                    ->searchable()
-                    ->preload(),
                 Forms\Components\Select::make('user_id')
                     ->translateLabel()
                     ->relationship('user', 'name')
@@ -157,13 +151,6 @@ class OrderResource extends Resource
                 Tables\Columns\TextColumn::make('order_number')
                     ->translateLabel()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('supplier.name')
-                    ->translateLabel()
-                    ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('user.name')
-                    ->translateLabel()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('order_date')
                     ->translateLabel()
                     ->date()

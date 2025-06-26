@@ -28,11 +28,6 @@ class Item extends Model
         return $this->belongsTo(Unit::class);
     }
 
-    public function suppliers()
-    {
-        return $this->belongsToMany(Supplier::class, 'item_supplier');
-    }
-
     public function warehouses()
     {
         return $this->belongsToMany(Warehouse::class, 'item_warehouse')->withPivot('quantity');

@@ -25,11 +25,6 @@ class Transaction extends Model
         return $this->belongsTo(Item::class);
     }
 
-    public function supplier()
-    {
-        return $this->belongsTo(Supplier::class)->nullable();
-    }
-
     public function warehouse()
     {
         return $this->belongsTo(Warehouse::class);
