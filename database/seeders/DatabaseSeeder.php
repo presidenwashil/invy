@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Item;
-use App\Models\Supplier;
 use App\Models\Unit;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -40,43 +39,6 @@ class DatabaseSeeder extends Seeder
         ];
         foreach ($units as $unit) {
             Unit::create($unit);
-        }
-
-        // Seed Suppliers
-        $suppliers = [
-            [
-                'code' => 'SUP001',
-                'name' => 'PD Dongoran',
-                'contact' => '+62 (48) 456-3137',
-                'address' => 'Jalan Raya Setiabudhi No. 8, Banjar, SB 31897',
-            ],
-            [
-                'code' => 'SUP002',
-                'name' => 'UD Mandasari (Persero) Tbk',
-                'contact' => '+62-800-027-8010',
-                'address' => 'Jl. Sentot Alibasa No. 240, Dumai, KT 22891',
-            ],
-            [
-                'code' => 'SUP003',
-                'name' => 'PT Nasyidah',
-                'contact' => '+62-0494-437-5051',
-                'address' => 'Jl. Cikapayang No. 6, Pagaralam, JI 31146',
-            ],
-            [
-                'code' => 'SUP004',
-                'name' => 'Perum Purnawati Kuswoyo (Persero) Tbk',
-                'contact' => '+62 (0632) 431-7209',
-                'address' => 'Jl. Dipatiukur No. 8, Medan, NB 36691',
-            ],
-            [
-                'code' => 'SUP005',
-                'name' => 'Perum Riyanti',
-                'contact' => '+62 (055) 648 3700',
-                'address' => 'Jalan K.H. Wahid Hasyim No. 0, Singkawang, JT 80415',
-            ],
-        ];
-        foreach ($suppliers as $supplier) {
-            Supplier::create($supplier);
         }
 
         // Seed Items
