@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('item_histories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('item_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->enum('type', ['adjustment', 'receiving', 'usage', 'return', 'transfer']);
             $table->integer('initial_stock')->default(0);
             $table->integer('in')->default(0);

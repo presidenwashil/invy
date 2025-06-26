@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nip')->unique();
             $table->string('name');
+            $table->string('position');
             $table->timestamps();
             $table->softDeletes();
         });

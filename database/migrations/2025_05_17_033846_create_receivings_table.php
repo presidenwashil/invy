@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('receiving_number')->unique();
             $table->foreignId('order_id')->constrained()->cascadeOnDelete();
             $table->date('received_date');
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->text('note')->nullable();
             $table->string('proof_file')->nullable();
             $table->timestamps();
