@@ -17,6 +17,7 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
+            'code' => $this->faker->unique()->bothify('CAT###'),
             'name' => $this->faker->unique()->word,
         ];
     }
