@@ -24,11 +24,22 @@ class ReceivingResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-truck';
 
+    public static function getModelLabel(): string
+    {
+        return __('Receiving');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Receivings');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('receiving_number')
+                    ->translateLabel()
                     ->required()
                     ->default(function () {
                         $today = now()->format('Ymd');
@@ -47,6 +58,7 @@ class ReceivingResource extends Resource
                     })
                     ->readonly(),
                 Select::make('order_id')
+                    ->translateLabel()
                     ->relationship('order', 'order_number')
                     ->searchable()
                     ->preload()
@@ -73,37 +85,40 @@ class ReceivingResource extends Resource
                         $set('details', $details);
                     }),
                 DatePicker::make('received_date')
+                    ->translateLabel()
                     ->default(now())
                     ->required(),
                 Select::make('user_id')
+                    ->translateLabel()
                     ->relationship('user', 'name')
                     ->default(auth()->id())
                     ->disabled()
                     ->dehydrated(true)
                     ->required(),
                 FileUpload::make('proof_file')
-                    ->label('Upload Bukti Penerimaan')
+                    ->translateLabel()
                     ->directory('receiving-proofs')
                     ->preserveFilenames()
                     ->downloadable(),
                 Textarea::make('note')
-                    ->label('Catatan')
+                    ->translateLabel()
                     ->nullable(),
                 TableRepeater::make('details')
-                    ->label('Detail Barang')
+                    ->label(__('Receiving details'))
                     ->headers([
-                        Header::make('item'),
-                        Header::make('quantity'),
+                        Header::make(__('Item')),
+                        Header::make(__('Quantity')),
                     ])
                     ->relationship()
                     ->schema([
                         Select::make('item_id')
-                            ->label('Barang')
+                            ->translateLabel()
                             ->disabled()
                             ->dehydrated(true)
                             ->relationship('item', 'name'),
 
                         TextInput::make('quantity')
+                            ->translateLabel()
                             ->label('Jumlah Diterima')
                             ->numeric()
                             ->required(),
@@ -130,10 +145,18 @@ class ReceivingResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('receiving_number')->searchable(),
-                Tables\Columns\TextColumn::make('order.order_number'),
-                Tables\Columns\TextColumn::make('received_date')->date(),
-                Tables\Columns\TextColumn::make('user.name'),
+                Tables\Columns\TextColumn::make('receiving_number')
+                    ->translateLabel()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('order.order_number')
+                    ->label(__('Order number'))
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('received_date')
+                    ->translateLabel()
+                    ->date(),
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label(__('Received by'))
+                    ->searchable(),
             ])
             ->filters([])
             ->actions([

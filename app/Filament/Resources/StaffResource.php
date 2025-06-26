@@ -18,6 +18,16 @@ class StaffResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getModelLabel(): string
+    {
+        return __('Staff');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Staffs');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -25,6 +35,7 @@ class StaffResource extends Resource
                 Forms\Components\TextInput::make('nip')
                     ->required(),
                 Forms\Components\TextInput::make('name')
+                    ->translateLabel()
                     ->required(),
             ]);
     }
@@ -36,16 +47,20 @@ class StaffResource extends Resource
                 Tables\Columns\TextColumn::make('nip')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('name')
+                    ->translateLabel()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->translateLabel()
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->translateLabel()
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('deleted_at')
+                    ->translateLabel()
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
