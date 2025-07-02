@@ -33,7 +33,7 @@ class ItemHistoryResource extends Resource
                 Forms\Components\TextInput::make('item_id')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('user_id')
+                Forms\Components\TextInput::make('staff_id')
                     ->required()
                     ->numeric(),
                 Forms\Components\TextInput::make('type')
@@ -61,8 +61,8 @@ class ItemHistoryResource extends Resource
                     ->label(__('Item'))
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('user.name')
-                    ->label(__('User'))
+                Tables\Columns\TextColumn::make('staff.name')
+                    ->translateLabel()
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('type')

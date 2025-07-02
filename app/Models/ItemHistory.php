@@ -11,8 +11,8 @@ class ItemHistory extends Model
         return $this->belongsTo(Item::class);
     }
 
-    public function user()
+    public function staff()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Staff::class);
     }
 }

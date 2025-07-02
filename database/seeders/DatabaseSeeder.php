@@ -4,8 +4,10 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Item;
+use App\Models\Staff;
 use App\Models\Unit;
 use App\Models\User;
+use App\Models\Warehouse;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -86,6 +88,40 @@ class DatabaseSeeder extends Seeder
         ];
         foreach ($items as $item) {
             Item::create($item);
+        }
+
+        // Seed Staffs
+        $staffs = [
+            [
+                'nip' => '197412142007011010',
+                'name' => 'Fadliansyah',
+                'position' => 'Pengurus Barang Pembantu',
+            ],
+            [
+                'nip' => '198501012010011001',
+                'name' => 'Rina Sari',
+                'position' => 'Pengurus Barang Utama',
+            ],
+        ];
+        foreach ($staffs as $staff) {
+            Staff::create($staff);
+        }
+
+        // Seeds Warehouse
+        $warehouses = [
+            [
+                'code' => 'WH001',
+                'name' => 'Ruang IT',
+                'location' => 'Lantai 1',
+            ],
+            [
+                'code' => 'WH002',
+                'name' => 'Ruang Publikasi & Dokumentasi',
+                'location' => 'Lantai 1',
+            ],
+        ];
+        foreach ($warehouses as $warehouse) {
+            Warehouse::create($warehouse);
         }
     }
 }

@@ -10,9 +10,4 @@ class ReceivingDetail extends Model
     {
         return $this->belongsTo(Item::class);
     }
-
-    public function orderDetail()
-    {
-        return $this->belongsTo(OrderDetail::class);
-    }
 }

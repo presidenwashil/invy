@@ -37,6 +37,9 @@ class StaffResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->translateLabel()
                     ->required(),
+                Forms\Components\TextInput::make('position')
+                    ->translateLabel()
+                    ->required(),
             ]);
     }
 
@@ -47,6 +50,9 @@ class StaffResource extends Resource
                 Tables\Columns\TextColumn::make('nip')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('name')
+                    ->translateLabel()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('position')
                     ->translateLabel()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')

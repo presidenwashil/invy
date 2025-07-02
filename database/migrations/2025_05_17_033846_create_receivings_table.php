@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('receivings', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('staff_id')->constrained()->cascadeOnDelete();
             $table->string('receiving_number')->unique();
-            $table->foreignId('order_id')->constrained()->cascadeOnDelete();
             $table->date('received_date');
             $table->text('note')->nullable();
             $table->string('proof_file')->nullable();

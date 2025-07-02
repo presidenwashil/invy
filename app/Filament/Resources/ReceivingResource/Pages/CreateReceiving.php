@@ -21,14 +21,12 @@ class CreateReceiving extends CreateRecord
 
             ItemHistory::create([
                 'item_id' => $item->id,
-                'user_id' => auth()->id(),
+                'staff_id' => $this->record->staff_id,
                 'type' => 'receiving',
                 'initial_stock' => $initialStock,
                 'in' => $detail->quantity,
                 'out' => 0,
             ]);
         }
-
-        $this->record->order?->update(['status' => 'completed']);
     }
 }

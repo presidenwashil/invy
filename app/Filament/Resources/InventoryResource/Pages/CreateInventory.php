@@ -33,8 +33,8 @@ class CreateInventory extends CreateRecord
 
         ItemHistory::create([
             'item_id' => $item->id,
-            'user_id' => auth()->id(),
-            'type' => 'usage', // atau 'inventory'
+            'staff_id' => $this->data['staff_id'],
+            'type' => 'inventory',
             'initial_stock' => $item->stock,
             'in' => 0,
             'out' => 1,

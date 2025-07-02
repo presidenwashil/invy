@@ -57,43 +57,16 @@ class ReceivingResource extends Resource
                         return $prefix.str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
                     })
                     ->readonly(),
-                Select::make('order_id')
-                    ->translateLabel()
-                    ->relationship('order', 'order_number')
-                    ->searchable()
-                    ->preload()
-                    ->required()
-                    ->reactive()
-                    ->afterStateUpdated(function ($state, callable $set) {
-                        // Ambil detail dari order terpilih
-                        $order = \App\Models\Order::with('details.item')->find($state);
-
-                        if (! $order) {
-                            $set('details', []);
-
-                            return;
-                        }
-
-                        $details = $order->details->map(function ($detail) {
-                            return [
-                                'item_id' => $detail->item_id,
-                                'quantity' => $detail->quantity,
-                            ];
-                        })->toArray();
-
-                        // Isi field details (Repeater)
-                        $set('details', $details);
-                    }),
                 DatePicker::make('received_date')
                     ->translateLabel()
                     ->default(now())
                     ->required(),
-                Select::make('user_id')
+                Select::make('staff_id')
                     ->translateLabel()
-                    ->relationship('user', 'name')
-                    ->default(auth()->id())
-                    ->disabled()
-                    ->dehydrated(true)
+                    ->label(__('Received by'))
+                    ->relationship('staff', 'name')
+                    ->preload()
+                    ->searchable()
                     ->required(),
                 FileUpload::make('proof_file')
                     ->translateLabel()
@@ -113,9 +86,9 @@ class ReceivingResource extends Resource
                     ->schema([
                         Select::make('item_id')
                             ->translateLabel()
-                            ->disabled()
-                            ->dehydrated(true)
-                            ->relationship('item', 'name'),
+                            ->relationship('item', 'name')
+                            ->preload()
+                            ->searchable(),
 
                         TextInput::make('quantity')
                             ->translateLabel()
@@ -123,19 +96,6 @@ class ReceivingResource extends Resource
                             ->numeric()
                             ->required(),
                     ])
-                    ->default(function (callable $get) {
-                        $order = \App\Models\Order::with('details.item')->find($get('order_id'));
-                        if (! $order) {
-                            return [];
-                        }
-
-                        return $order->details->map(function ($detail) {
-                            return [
-                                'item_id' => $detail->id,
-                                'quantity' => $detail->quantity,
-                            ];
-                        })->toArray();
-                    })
                     ->required()
                     ->columnSpan('full'),
             ]);
@@ -148,13 +108,10 @@ class ReceivingResource extends Resource
                 Tables\Columns\TextColumn::make('receiving_number')
                     ->translateLabel()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('order.order_number')
-                    ->label(__('Order number'))
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('received_date')
                     ->translateLabel()
                     ->date(),
-                Tables\Columns\TextColumn::make('user.name')
+                Tables\Columns\TextColumn::make('staff.name')
                     ->label(__('Received by'))
                     ->searchable(),
             ])

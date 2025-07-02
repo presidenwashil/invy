@@ -39,6 +39,13 @@ class InventoryResource extends Resource
                     ->relationship('item', 'name')
                     ->preload()
                     ->searchable(),
+                Forms\Components\Select::make('staff_id')
+                    ->translateLabel()
+                    ->label(__('Staff'))
+                    ->required()
+                    ->relationship('staff', 'name')
+                    ->preload()
+                    ->searchable(),
                 Forms\Components\Select::make('warehouse_id')
                     ->label(__('Warehouse'))
                     ->required()
