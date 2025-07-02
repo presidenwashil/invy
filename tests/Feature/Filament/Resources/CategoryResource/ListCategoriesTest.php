@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Filament\Resources\CategoryResource\Pages\ListCategories;
 use App\Models\Category;
 

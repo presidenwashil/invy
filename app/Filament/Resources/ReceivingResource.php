@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ReceivingResource\Pages;
 use App\Models\Receiving;
 use Awcodes\TableRepeater\Components\TableRepeater;
 use Awcodes\TableRepeater\Header;
-use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
@@ -17,7 +18,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class ReceivingResource extends Resource
+final class ReceivingResource extends Resource
 {
     protected static ?string $model = Receiving::class;
 
@@ -37,7 +38,7 @@ class ReceivingResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('receiving_number')
+                TextInput::make('receiving_number')
                     ->translateLabel()
                     ->required()
                     ->default(function () {
@@ -50,10 +51,10 @@ class ReceivingResource extends Resource
                             ->first();
 
                         $lastNumber = $latest
-                            ? (int) substr($latest->receiving_number, -3)
+                            ? (int) mb_substr($latest->receiving_number, -3)
                             : 0;
 
-                        return $prefix.str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
+                        return $prefix.mb_str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
                     })
                     ->readonly(),
                 DatePicker::make('received_date')

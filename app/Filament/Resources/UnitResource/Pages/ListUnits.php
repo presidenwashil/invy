@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\UnitResource\Pages;
 
 use App\Filament\Resources\UnitResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
-class ListUnits extends ListRecords
+final class ListUnits extends ListRecords
 {
     protected static string $resource = UnitResource::class;
 

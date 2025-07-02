@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\HandoverResource\Pages;
@@ -13,7 +15,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class HandoverResource extends Resource
+final class HandoverResource extends Resource
 {
     protected static ?string $model = Handover::class;
 

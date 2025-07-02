@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\HandoverResource\Pages;
 
 use App\Filament\Resources\HandoverResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
-class ListHandovers extends ListRecords
+final class ListHandovers extends ListRecords
 {
     protected static string $resource = HandoverResource::class;
 

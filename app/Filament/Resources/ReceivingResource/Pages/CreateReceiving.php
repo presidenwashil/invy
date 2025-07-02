@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\ReceivingResource\Pages;
 
 use App\Filament\Resources\ReceivingResource;
 use App\Models\ItemHistory;
 use Filament\Resources\Pages\CreateRecord;
 
-class CreateReceiving extends CreateRecord
+final class CreateReceiving extends CreateRecord
 {
     protected static string $resource = ReceivingResource::class;
 

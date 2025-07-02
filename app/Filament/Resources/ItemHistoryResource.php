@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ItemHistoryResource\Pages;
@@ -10,7 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class ItemHistoryResource extends Resource
+final class ItemHistoryResource extends Resource
 {
     protected static ?string $model = ItemHistory::class;
 

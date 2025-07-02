@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\HandoverResource\RelationManagers;
 
 use Filament\Forms;
@@ -8,7 +10,7 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class DetailsRelationManager extends RelationManager
+final class DetailsRelationManager extends RelationManager
 {
     protected static string $relationship = 'details';
 

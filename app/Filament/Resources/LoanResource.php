@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\LoanResource\Pages;
@@ -15,7 +17,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class LoanResource extends Resource
+final class LoanResource extends Resource
 {
     protected static ?string $model = Loan::class;
 

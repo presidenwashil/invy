@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\LoanResource\Pages;
 
 use App\Filament\Resources\LoanResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
-class ListLoans extends ListRecords
+final class ListLoans extends ListRecords
 {
     protected static string $resource = LoanResource::class;
 
