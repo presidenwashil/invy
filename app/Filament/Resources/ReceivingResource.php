@@ -54,7 +54,7 @@ final class ReceivingResource extends Resource
                             ? (int) mb_substr($latest->receiving_number, -3)
                             : 0;
 
-                        return $prefix.mb_str_pad((string)($lastNumber + 1), 3, '0', STR_PAD_LEFT);
+                        return $prefix.mb_str_pad((string) ($lastNumber + 1), 3, '0', STR_PAD_LEFT);
                     })
                     ->readonly(),
                 DatePicker::make('received_date')
