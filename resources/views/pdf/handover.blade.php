@@ -32,7 +32,8 @@
 
 
 <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pada hari ini senin tanggal empat bulan november tahun dua ribu dua puluh empat, yang bertanda tangan di bawah ini :
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    Pada hari ini {{ \Carbon\Carbon::parse($handover->handover_date)->locale('id')->translatedFormat('l') }} tanggal {{ \Carbon\Carbon::parse($handover->handover_date)->translatedFormat('d') }} bulan {{ \Carbon\Carbon::parse($handover->handover_date)->translatedFormat('F') }} tahun {{ \Carbon\Carbon::parse($handover->handover_date)->translatedFormat('Y') }}, yang bertanda tangan di bawah ini :
 </p>
 
     <table>
