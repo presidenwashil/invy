@@ -18,7 +18,7 @@ final class ListHandovers extends ListRecords
             Actions\Action::make('export-pdf')
                 ->label(__('Export PDF'))
                 ->icon('heroicon-o-document')
-                ->url(fn()=>route('list-handover', request()->only('tableFilters')))
+                ->url(fn () => route('list-handover', request()->only('tableFilters')))
                 ->openUrlInNewTab()
                 ->color('danger'),
             Actions\CreateAction::make(),

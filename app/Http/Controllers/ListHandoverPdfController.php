@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Handover;
 use Illuminate\Http\Request;
 
-class ListHandoverPdfController extends Controller
+final class ListHandoverPdfController extends Controller
 {
     public function __invoke(Request $request)
     {
@@ -19,7 +21,7 @@ class ListHandoverPdfController extends Controller
             $query->whereYear('handover_date', (int) $year);
         }
 
-        if (!empty($filters['month']['value'])){
+        if (! empty($filters['month']['value'])) {
             $month = (int) $filters['month']['value'];
             $query->whereMonth('handover_date', $month);
         }
