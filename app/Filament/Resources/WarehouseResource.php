@@ -16,7 +16,10 @@ final class WarehouseResource extends Resource
 {
     protected static ?string $model = Warehouse::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    public static function getNavigationGroup(): string
+    {
+        return __('Masters');
+    }
 
     public static function getModelLabel(): string
     {

@@ -14,6 +14,6 @@ final class HandoverPdfController extends Controller
         $handover = Handover::findOrFail($record);
         $pdf = Pdf::loadView('pdf.handover', compact('handover'));
 
-        return $pdf->download('handover_'.$handover->id.'.pdf');
+        return $pdf->stream('handover_'.$handover->id.'.pdf');
     }
 }

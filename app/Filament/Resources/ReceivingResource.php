@@ -22,7 +22,12 @@ final class ReceivingResource extends Resource
 {
     protected static ?string $model = Receiving::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-truck';
+    protected static ?int $navigationSort = 0;
+
+    public static function getNavigationGroup(): string
+    {
+        return __('Transactions');
+    }
 
     public static function getModelLabel(): string
     {

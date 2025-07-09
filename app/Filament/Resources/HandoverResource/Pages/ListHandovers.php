@@ -15,6 +15,12 @@ final class ListHandovers extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
+            Actions\Action::make('export-pdf')
+                ->label(__('Export PDF'))
+                ->icon('heroicon-o-document')
+                ->url(fn()=>route('list-handover', request()->only('tableFilters')))
+                ->openUrlInNewTab()
+                ->color('danger'),
             Actions\CreateAction::make(),
         ];
     }

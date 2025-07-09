@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('serial_number')->nullable();
             $table->string('brand')->nullable();
             $table->text('specification')->nullable();
-            $table->date('purchase_date')->nullable();
+            $table->date('handover_date')->nullable();
             $table->string('production_year')->nullable();
             $table->enum('status', ['available', 'damaged', 'lost', 'borrowed', 'maintanance'])->default('available');
             $table->timestamps();

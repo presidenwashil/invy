@@ -21,7 +21,12 @@ final class LoanResource extends Resource
 {
     protected static ?string $model = Loan::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?int $navigationSort = 3;
+
+    public static function getNavigationGroup(): string
+    {
+        return __('Transactions');
+    }
 
     public static function getModelLabel(): string
     {
@@ -65,8 +70,8 @@ final class LoanResource extends Resource
                             ->label('Inventaris')
                             ->searchable()
                             ->preload()
-                            ->relationship('inventory', 'code')
-                            ->getOptionLabelFromRecordUsing(fn ($record) => "{$record->code} - {$record->item->name}")
+                            ->relationship('inventory', 'inventory_number')
+                            ->getOptionLabelFromRecordUsing(fn ($record) => "{$record->inventory_number} - {$record->item->name}")
                             ->required(),
 
                         Select::make('loan_status')

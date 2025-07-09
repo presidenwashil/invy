@@ -14,12 +14,18 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Carbon;
 
 final class HandoverResource extends Resource
 {
     protected static ?string $model = Handover::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?int $navigationSort = 2;
+
+    public static function getNavigationGroup(): string
+    {
+        return __('Transactions');
+    }
 
     public static function getModelLabel(): string
     {
@@ -36,7 +42,7 @@ final class HandoverResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('staff_id')
-                    ->translateLabel()
+                    ->label(__('Handed over to'))
                     ->required()
                     ->relationship('staff', 'name')
                     ->preload()
@@ -49,6 +55,11 @@ final class HandoverResource extends Resource
                     ->default(now())
                     ->native(false)
                     ->required(),
+                Forms\Components\FileUpload::make('proof_file')
+                    ->translateLabel()
+                    ->directory('receiving-proofs')
+                    ->preserveFilenames()
+                    ->downloadable(),
             ]);
     }
 
@@ -60,7 +71,7 @@ final class HandoverResource extends Resource
                     ->label(__('NIP'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('staff.name')
-                    ->label(__('Staff Name'))
+                    ->label(__('Handed over to'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('handover_number')
                     ->translateLabel()
@@ -86,6 +97,37 @@ final class HandoverResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
+                Tables\Filters\Filter::make('year')
+                    ->form([
+                        Forms\Components\TextInput::make('year')
+                            ->translateLabel()
+                            ->numeric()
+                    ])
+                    ->query(function ($query, array $data) {
+                        if (!empty($data['year'])) {
+                            $query->whereYear('handover_date', $data['year']);
+                        }
+
+                        return $query;
+                    })
+                    ->indicateUsing(function(array $data): ?string{
+                        return !empty($data['year']) ? __('Year') . ': ' . $data['year'] : null;
+                    }),
+                Tables\Filters\SelectFilter::make('month')
+                    ->translateLabel()
+                    ->options(
+                        collect(range(1, 12))->mapWithKeys(fn($month)=>[
+                            $month => Carbon::create()->month($month)->translatedFormat('F')
+                        ])->toArray()
+                    )
+                    ->query(function (Builder $query, array $data) {
+                        if (!empty($data['value'])) {
+                            $query->whereMonth('handover_date', $data['value']);
+                        }
+
+                        return $query;
+                    })
+                    ->native(false),
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([

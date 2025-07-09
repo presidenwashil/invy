@@ -26,12 +26,12 @@
 
     <div class="title">
         BERITA ACARA SERAH TERIMA BARANG<br>
-        Nomor : 00 / BAST/XII/2024
+        Nomor : {{ $handover->handover_number }}
     </div>
 
 
 
-<p>   
+<p>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pada hari ini senin tanggal empat bulan november tahun dua ribu dua puluh empat, yang bertanda tangan di bawah ini :
 </p>
 

@@ -16,7 +16,12 @@ final class ItemHistoryResource extends Resource
 {
     protected static ?string $model = ItemHistory::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?int $navigationSort = 4;
+
+    public static function getNavigationGroup(): string
+    {
+        return __('Transactions');
+    }
 
     public static function getModelLabel(): string
     {
@@ -32,26 +37,7 @@ final class ItemHistoryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('item_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('staff_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('type')
-                    ->required(),
-                Forms\Components\TextInput::make('initial_stock')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
-                Forms\Components\TextInput::make('in')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
-                Forms\Components\TextInput::make('out')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
+                //
             ]);
     }
 
@@ -107,8 +93,8 @@ final class ItemHistoryResource extends Resource
     {
         return [
             'index' => Pages\ListItemHistories::route('/'),
-            'create' => Pages\CreateItemHistory::route('/create'),
-            'edit' => Pages\EditItemHistory::route('/{record}/edit'),
+            // 'create' => Pages\CreateItemHistory::route('/create'),
+            // 'edit' => Pages\EditItemHistory::route('/{record}/edit'),
         ];
     }
 }

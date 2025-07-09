@@ -18,7 +18,10 @@ final class UnitResource extends Resource
 {
     protected static ?string $model = Unit::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-scale';
+    public static function getNavigationGroup(): string
+    {
+        return __('Masters');
+    }
 
     public static function getModelLabel(): string
     {

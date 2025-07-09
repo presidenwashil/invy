@@ -54,8 +54,8 @@ final class DetailsRelationManager extends RelationManager
                     ->label(__('Specification'))
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('inventory.purchase_date')
-                    ->label(__('Purchase date'))
+                Tables\Columns\TextColumn::make('inventory.handover_date')
+                    ->label(__('Handover date'))
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('inventory.production_year')
