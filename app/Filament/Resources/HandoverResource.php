@@ -101,27 +101,27 @@ final class HandoverResource extends Resource
                     ->form([
                         Forms\Components\TextInput::make('year')
                             ->translateLabel()
-                            ->numeric()
+                            ->numeric(),
                     ])
                     ->query(function ($query, array $data) {
-                        if (!empty($data['year'])) {
+                        if (! empty($data['year'])) {
                             $query->whereYear('handover_date', $data['year']);
                         }
 
                         return $query;
                     })
-                    ->indicateUsing(function(array $data): ?string{
-                        return !empty($data['year']) ? __('Year') . ': ' . $data['year'] : null;
+                    ->indicateUsing(function (array $data): ?string {
+                        return ! empty($data['year']) ? __('Year').': '.$data['year'] : null;
                     }),
                 Tables\Filters\SelectFilter::make('month')
                     ->translateLabel()
                     ->options(
-                        collect(range(1, 12))->mapWithKeys(fn($month)=>[
-                            $month => Carbon::create()->month($month)->translatedFormat('F')
+                        collect(range(1, 12))->mapWithKeys(fn ($month) => [
+                            $month => Carbon::create()->month($month)->translatedFormat('F'),
                         ])->toArray()
                     )
                     ->query(function (Builder $query, array $data) {
-                        if (!empty($data['value'])) {
+                        if (! empty($data['value'])) {
                             $query->whereMonth('handover_date', $data['value']);
                         }
 

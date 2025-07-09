@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Widgets;
 
 use App\Models\ItemHistory;
-use App\Models\Receiving;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Illuminate\Support\Number;
 
-class StatsOverview extends BaseWidget
+final class StatsOverview extends BaseWidget
 {
     protected static ?int $sort = 0;
 
@@ -30,10 +31,10 @@ class StatsOverview extends BaseWidget
             }
 
             if ($number < 1000000) {
-                return Number::format($number / 1000, 2) . 'k';
+                return Number::format($number / 1000, 2).'k';
             }
 
-            return Number::format($number / 1000000, 2) . 'm';
+            return Number::format($number / 1000000, 2).'m';
         };
 
         return [
