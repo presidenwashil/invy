@@ -11,7 +11,7 @@ final class ListHandoverPdfController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $query = Handover::query();
+        $query = Handover::with(['staff', 'details']);
 
         $filters = $request->input('tableFilters', []);
 

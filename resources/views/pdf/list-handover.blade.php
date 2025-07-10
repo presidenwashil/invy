@@ -45,16 +45,16 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                @foreach ($handovers as $item)
+            @foreach ($handovers as $item)
+                <tr>
                     <td align="center">{{ $loop->iteration }}</td>
                     <td>{{ $item->staff->nip }}</td>
                     <td>{{ $item->staff->name }}</td>
                     <td>{{ $item->handover_number }}</td>
                     <td>{{ $item->handover_date }}</td>
                     <td align="center">{{ $item->details->count() }}</td>
-                @endforeach
-            </tr>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 
