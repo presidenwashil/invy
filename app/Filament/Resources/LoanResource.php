@@ -49,6 +49,14 @@ final class LoanResource extends Resource
                     ->searchable()
                     ->required(),
 
+                Select::make('staff_id')
+                    ->label('Peminjam')
+                    ->translateLabel()
+                    ->relationship('staff', 'name')
+                    ->preload()
+                    ->searchable()
+                    ->required(),
+
                 DatePicker::make('loan_date')
                     ->label('Tanggal Peminjaman')
                     ->default(now())
@@ -70,8 +78,13 @@ final class LoanResource extends Resource
                             ->label('Inventaris')
                             ->searchable()
                             ->preload()
-                            ->relationship('inventory', 'inventory_number')
+                            ->relationship(
+                                'inventory',
+                                'inventory_number',
+                                fn ($query) => $query->with('item')
+                            )
                             ->getOptionLabelFromRecordUsing(fn ($record) => "{$record->inventory_number} - {$record->item->name}")
+                            ->disabled(fn ($livewire) => $livewire instanceof \Filament\Resources\Pages\EditRecord)
                             ->required(),
 
                         Select::make('loan_status')

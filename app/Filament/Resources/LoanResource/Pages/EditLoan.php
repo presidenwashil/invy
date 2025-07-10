@@ -12,6 +12,19 @@ final class EditLoan extends EditRecord
 {
     protected static string $resource = LoanResource::class;
 
+    public function afterSave()
+    {
+        // loan memiliki banyak detail
+        // apabila setiap detail loan status peminjamannya berubah menjadi returned,
+        // maka update status inventory menjadi available
+
+        if ($this->record->details->every(fn ($detail) => $detail->loan_status === 'returned')) {
+            $this->record->details->each(fn ($detail) => $detail->inventory->update([
+                'status' => 'available',
+            ]));
+        }
+    }
+
     protected function getHeaderActions(): array
     {
         return [
