@@ -101,20 +101,20 @@
         <thead>
             <tr>
                 <th>No</th>
+                <th>Nomor Inventaris</th>
                 <th>Nama Barang</th>
                 <th>Spesifikasi</th>
-                <th>Jumlah</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                @foreach ($handover->details as $item)
+            @foreach ($handover->details as $item)
+                <tr>
                     <td align="center">{{ $loop->iteration }}</td>
+                    <td>{{ $item->inventory->inventory_number }}</td>
                     <td>{{ $item->inventory->item->name }} {{ $item->inventory->brand }} </td>
                     <td>{{ $item->inventory->specification }}</td>
-                    <td align="center">{{ $item->count() }} Unit</td>
-                @endforeach
-            </tr>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 
