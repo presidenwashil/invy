@@ -51,6 +51,7 @@ final class ItemResource extends Resource
                     ->translateLabel()
                     ->required()
                     ->numeric()
+                    ->readOnly()
                     ->default(0),
                 Forms\Components\TextInput::make('price')
                     ->translateLabel()
