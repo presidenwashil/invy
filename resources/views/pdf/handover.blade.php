@@ -82,7 +82,7 @@
             <td></td>
             <td>Jabatan</td>
             <td>:</td>
-            <td>Pengurus Barang Utama</td>
+            <td>{{ $handover->staff->position }}</td>
         </tr>
     </table>
     <table>
@@ -122,12 +122,12 @@
     <table class="signature">
         <tr>
             <td align="center">
-                PIHAK PERTAMA<br><br><br><br><br>
+                PIHAK PERTAMA<br>Pengurus Barang Pembantu<br><br><br><br>
                 <u>Fadliansyah</u><br>
                 NIP. 197412142007011010
             </td>
             <td align="center">
-                PIHAK KEDUA<br><br><br><br><br>
+                PIHAK KEDUA<br>{{ $handover->staff->position }}<br><br><br><br>
                 <u>{{ $handover->staff->name }}</u><br>
                 NIP. {{ $handover->staff->nip }}
             </td>
