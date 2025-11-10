@@ -13,13 +13,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('receivings', function (Blueprint $table) {
-            $table->id();
-            $table->string('receiving_number')->unique();
-            $table->date('received_date');
-            $table->text('note')->nullable();
-            $table->string('proof_file')->nullable();
-            $table->timestamps();
+        Schema::table('inventories', function (Blueprint $table) {
+            $table->foreignId('staff_id')->after('warehouse_id')->constrained()->cascadeOnDelete();
         });
     }
 
@@ -28,6 +23,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('receivings');
+        Schema::table('inventories', function (Blueprint $table) {
+            $table->dropForeign(['staff_id']);
+            $table->dropColumn('staff_id');
+        });
     }
 };

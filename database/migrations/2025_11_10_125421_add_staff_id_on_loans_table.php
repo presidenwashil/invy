@@ -13,12 +13,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('loans', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('warehouse_id')->constrained()->cascadeOnDelete();
-            $table->date('loan_date');
-            $table->text('note')->nullable();
-            $table->timestamps();
+        Schema::table('loans', function (Blueprint $table) {
+            $table->foreignId('staff_id')->after('warehouse_id')->constrained()->cascadeOnDelete();
         });
     }
 
@@ -28,9 +24,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('loans', function (Blueprint $table) {
-            $table->dropForeign(['warehouse_id']);
+            $table->dropForeign(['staff_id']);
+            $table->dropColumn('staff_id');
         });
-
-        Schema::dropIfExists('loans');
     }
 };

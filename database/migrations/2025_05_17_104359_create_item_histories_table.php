@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('item_histories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('item_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('staff_id')->constrained()->cascadeOnDelete();
             $table->enum('type', ['receiving', 'inventory']);
             $table->integer('initial_stock')->default(0);
             $table->integer('in')->default(0);
@@ -30,6 +29,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('item_histories', function (Blueprint $table) {
+            $table->dropForeign(['item_id']);
+        });
+
         Schema::dropIfExists('item_histories');
     }
 };

@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('inventory_number')->unique();
             $table->foreignId('item_id')->constrained()->cascadeOnDelete();
             $table->foreignId('warehouse_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('staff_id')->constrained()->cascadeOnDelete();
             $table->string('serial_number')->nullable();
             $table->string('brand')->nullable();
             $table->text('specification')->nullable();
@@ -34,6 +33,11 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('inventories', function (Blueprint $table) {
+            $table->dropForeign(['item_id']);
+            $table->dropForeign(['warehouse_id']);
+        });
+
         Schema::dropIfExists('inventories');
     }
 };
