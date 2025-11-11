@@ -62,6 +62,12 @@ return [
             'report' => false,
         ],
 
+        'dropbox' => [
+            'driver' => 'dropbox',
+            'authorization_token' => env('DROPBOX_ACCESS_TOKEN'),
+            'throw' => false,
+            'report' => false,
+        ],
     ],
 
     /*
