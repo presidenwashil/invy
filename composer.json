@@ -64,8 +64,7 @@
         "test:lint": "pint --test",
         "test": [
             "@test:lint"
-        ],
-        "vercel": "npm ci && npm run build"
+        ]
     },
     "extra": {
         "laravel": {
