@@ -11,9 +11,9 @@ final class HandoverPdfController extends Controller
 {
     public function __invoke($record)
     {
-        $handover = Handover::findOrFail($record);
+        $handover = Handover::with(['details', 'details.inventory', 'details.inventory.item'])->findOrFail($record);
         $pdf = Pdf::loadView('pdf.handover', compact('handover'));
 
-        return $pdf->download('handover_'.$handover->id.'.pdf');
+        return $pdf->stream('handover_'.$handover->id.'.pdf');
     }
 }

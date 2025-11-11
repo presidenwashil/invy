@@ -16,7 +16,12 @@ final class InventoryResource extends Resource
 {
     protected static ?string $model = Inventory::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?int $navigationSort = 1;
+
+    public static function getNavigationGroup(): string
+    {
+        return __('Transactions');
+    }
 
     public static function getModelLabel(): string
     {
@@ -64,7 +69,7 @@ final class InventoryResource extends Resource
                     ->translateLabel()
                     ->nullable()
                     ->rows(3),
-                Forms\Components\DatePicker::make('purchase_date')
+                Forms\Components\DatePicker::make('handover_date')
                     ->translateLabel()
                     ->nullable()
                     ->displayFormat('Y-m-d')
@@ -118,7 +123,7 @@ final class InventoryResource extends Resource
                     ->translateLabel()
                     ->searchable()
                     ->limit(50),
-                Tables\Columns\TextColumn::make('purchase_date')
+                Tables\Columns\TextColumn::make('handover_date')
                     ->translateLabel()
                     ->date()
                     ->sortable(),

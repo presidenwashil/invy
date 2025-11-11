@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('staff_id')->constrained('staff')->onDelete('cascade');
             $table->string('handover_number')->unique();
             $table->date('handover_date');
+            $table->string('proof_file')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

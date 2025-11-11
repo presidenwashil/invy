@@ -26,13 +26,14 @@
 
     <div class="title">
         BERITA ACARA SERAH TERIMA BARANG<br>
-        Nomor : 00 / BAST/XII/2024
+        Nomor : {{ $handover->handover_number }}
     </div>
 
 
 
-<p>   
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pada hari ini senin tanggal empat bulan november tahun dua ribu dua puluh empat, yang bertanda tangan di bawah ini :
+<p>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    Pada hari ini {{ \Carbon\Carbon::parse($handover->handover_date)->locale('id')->translatedFormat('l') }} tanggal {{ \Carbon\Carbon::parse($handover->handover_date)->translatedFormat('d') }} bulan {{ \Carbon\Carbon::parse($handover->handover_date)->translatedFormat('F') }} tahun {{ \Carbon\Carbon::parse($handover->handover_date)->translatedFormat('Y') }}, yang bertanda tangan di bawah ini :
 </p>
 
     <table>
@@ -81,7 +82,7 @@
             <td></td>
             <td>Jabatan</td>
             <td>:</td>
-            <td>Pengurus Barang Utama</td>
+            <td>{{ $handover->staff->position }}</td>
         </tr>
     </table>
     <table>
@@ -100,20 +101,20 @@
         <thead>
             <tr>
                 <th>No</th>
+                <th>Nomor Inventaris</th>
                 <th>Nama Barang</th>
                 <th>Spesifikasi</th>
-                <th>Jumlah</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                @foreach ($handover->details as $item)
+            @foreach ($handover->details as $item)
+                <tr>
                     <td align="center">{{ $loop->iteration }}</td>
+                    <td>{{ $item->inventory->inventory_number }}</td>
                     <td>{{ $item->inventory->item->name }} {{ $item->inventory->brand }} </td>
                     <td>{{ $item->inventory->specification }}</td>
-                    <td align="center">{{ $item->count() }} Unit</td>
-                @endforeach
-            </tr>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 
@@ -121,12 +122,12 @@
     <table class="signature">
         <tr>
             <td align="center">
-                PIHAK PERTAMA<br><br><br><br><br>
+                PIHAK PERTAMA<br>Pengurus Barang Pembantu<br><br><br><br>
                 <u>Fadliansyah</u><br>
                 NIP. 197412142007011010
             </td>
             <td align="center">
-                PIHAK KEDUA<br><br><br><br><br>
+                PIHAK KEDUA<br>{{ $handover->staff->position }}<br><br><br><br>
                 <u>{{ $handover->staff->name }}</u><br>
                 NIP. {{ $handover->staff->nip }}
             </td>

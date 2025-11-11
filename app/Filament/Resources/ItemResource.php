@@ -18,7 +18,10 @@ final class ItemResource extends Resource
 {
     protected static ?string $model = Item::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-cube';
+    public static function getNavigationGroup(): string
+    {
+        return __('Masters');
+    }
 
     public static function getModelLabel(): string
     {
@@ -48,6 +51,7 @@ final class ItemResource extends Resource
                     ->translateLabel()
                     ->required()
                     ->numeric()
+                    ->readOnly()
                     ->default(0),
                 Forms\Components\TextInput::make('price')
                     ->translateLabel()

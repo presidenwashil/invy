@@ -21,7 +21,12 @@ final class LoanResource extends Resource
 {
     protected static ?string $model = Loan::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?int $navigationSort = 3;
+
+    public static function getNavigationGroup(): string
+    {
+        return __('Transactions');
+    }
 
     public static function getModelLabel(): string
     {
@@ -40,6 +45,14 @@ final class LoanResource extends Resource
                 Select::make('warehouse_id')
                     ->translateLabel()
                     ->relationship('warehouse', 'name')
+                    ->preload()
+                    ->searchable()
+                    ->required(),
+
+                Select::make('staff_id')
+                    ->label('Peminjam')
+                    ->translateLabel()
+                    ->relationship('staff', 'name')
                     ->preload()
                     ->searchable()
                     ->required(),
@@ -65,8 +78,13 @@ final class LoanResource extends Resource
                             ->label('Inventaris')
                             ->searchable()
                             ->preload()
-                            ->relationship('inventory', 'code')
-                            ->getOptionLabelFromRecordUsing(fn ($record) => "{$record->code} - {$record->item->name}")
+                            ->relationship(
+                                'inventory',
+                                'inventory_number',
+                                fn ($query) => $query->with('item')
+                            )
+                            ->getOptionLabelFromRecordUsing(fn ($record) => "{$record->inventory_number} - {$record->item->name}")
+                            ->disabled(fn ($livewire) => $livewire instanceof \Filament\Resources\Pages\EditRecord)
                             ->required(),
 
                         Select::make('loan_status')

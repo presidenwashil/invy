@@ -18,7 +18,12 @@ final class StaffResource extends Resource
 {
     protected static ?string $model = Staff::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?int $navigationSort = 0;
+
+    public static function getNavigationGroup(): string
+    {
+        return __('Masters');
+    }
 
     public static function getModelLabel(): string
     {
