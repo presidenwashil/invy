@@ -81,7 +81,6 @@ final class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ])
-            ->theme(asset('css/filament/admin/theme.css'));
+            ]);
     }
 }
