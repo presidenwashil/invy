@@ -31,6 +31,14 @@ final class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
+        $view = config('view.compiled');
+        $ssr = config('ssr.node.temp_path');
+        foreach ([$view, $ssr] as $path) {
+            if (! is_dir($path)) {
+                mkdir($path, 0755, true);
+            }
+        }
+
         if (config('database.default') === 'sqlite') {
             DB::statement('PRAGMA foreign_keys = ON;');
         }
