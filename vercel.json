@@ -28,7 +28,7 @@
         "CACHE_DRIVER": "array",
         "FILESYSTEM_DISK": "dropbox",
         "LOG_CHANNEL": "stderr",
-        "SESSION_DRIVER": "array",
+        "SESSION_DRIVER": "database",
         "VIEW_COMPILED_PATH": "/tmp/views",
         "NODE_PATH": "node"
     }
