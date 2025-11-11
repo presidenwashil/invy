@@ -125,5 +125,8 @@ final class DatabaseSeeder extends Seeder
         foreach ($warehouses as $warehouse) {
             Warehouse::create($warehouse);
         }
+
+        // Permissions
+        $this->call(ShieldSeeder::class);
     }
 }
