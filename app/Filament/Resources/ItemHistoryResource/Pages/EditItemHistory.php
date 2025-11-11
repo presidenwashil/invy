@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\ItemHistoryResource\Pages;
 
 use App\Filament\Resources\ItemHistoryResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
-class EditItemHistory extends EditRecord
+final class EditItemHistory extends EditRecord
 {
     protected static string $resource = ItemHistoryResource::class;
 

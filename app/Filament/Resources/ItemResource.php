@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ItemResource\Pages;
-use App\Filament\Resources\ItemResource\RelationManagers;
 use App\Models\Item;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -13,35 +14,53 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ItemResource extends Resource
+final class ItemResource extends Resource
 {
     protected static ?string $model = Item::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-cube';
+
+    public static function getModelLabel(): string
+    {
+        return __('Item');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Items');
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('code')
+                    ->translateLabel()
                     ->required(),
                 Forms\Components\TextInput::make('name')
+                    ->translateLabel()
                     ->required(),
                 Forms\Components\Select::make('category_id')
+                    ->translateLabel()
                     ->relationship('category', 'name')
                     ->required(),
                 Forms\Components\TextInput::make('stock')
+                    ->translateLabel()
                     ->required()
                     ->numeric()
                     ->default(0),
                 Forms\Components\TextInput::make('price')
+                    ->translateLabel()
                     ->required()
                     ->numeric()
                     ->prefix('Rp.'),
                 Forms\Components\Toggle::make('status')
                     ->required(),
                 Forms\Components\Select::make('unit_id')
+                    ->translateLabel()
                     ->relationship('unit', 'name')
+                    ->preload()
+                    ->searchable()
                     ->required(),
             ]);
     }

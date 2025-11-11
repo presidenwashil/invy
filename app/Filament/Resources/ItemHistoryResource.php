@@ -1,23 +1,32 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ItemHistoryResource\Pages;
-use App\Filament\Resources\ItemHistoryResource\RelationManagers;
 use App\Models\ItemHistory;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ItemHistoryResource extends Resource
+final class ItemHistoryResource extends Resource
 {
     protected static ?string $model = ItemHistory::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    public static function getModelLabel(): string
+    {
+        return __('Item History');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Item Histories');
+    }
 
     public static function form(Form $form): Form
     {
@@ -26,7 +35,7 @@ class ItemHistoryResource extends Resource
                 Forms\Components\TextInput::make('item_id')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('user_id')
+                Forms\Components\TextInput::make('staff_id')
                     ->required()
                     ->numeric(),
                 Forms\Components\TextInput::make('type')
@@ -51,20 +60,26 @@ class ItemHistoryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('item.name')
+                    ->label(__('Item'))
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('user.name')
+                Tables\Columns\TextColumn::make('staff.name')
+                    ->translateLabel()
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('type')
+                    ->translateLabel()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('initial_stock')
+                    ->translateLabel()
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('in')
+                    ->translateLabel()
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('out')
+                    ->translateLabel()
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')

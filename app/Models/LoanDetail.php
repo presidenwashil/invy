@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class LoanDetail extends Model
+final class LoanDetail extends Model
 {
     public function loan()
     {

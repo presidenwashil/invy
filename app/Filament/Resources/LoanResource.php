@@ -1,13 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\LoanResource\Pages;
-use App\Filament\Resources\LoanResource\RelationManagers;
 use App\Models\Loan;
 use Awcodes\TableRepeater\Components\TableRepeater;
 use Awcodes\TableRepeater\Header;
-use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -16,22 +16,31 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class LoanResource extends Resource
+final class LoanResource extends Resource
 {
     protected static ?string $model = Loan::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+
+    public static function getModelLabel(): string
+    {
+        return __('Loan');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Loans');
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Select::make('warehouse_id')
-                    ->label('Pemohon')
+                    ->translateLabel()
                     ->relationship('warehouse', 'name')
+                    ->preload()
                     ->searchable()
                     ->required(),
 
@@ -73,14 +82,18 @@ class LoanResource extends Resource
             ]);
     }
 
-
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('warehouse.name')->label('Pemohon'),
-                TextColumn::make('loan_date')->date(),
-                TextColumn::make('details_count')->counts('details')->label('Jumlah Barang'),
+                TextColumn::make('warehouse.name')
+                    ->translateLabel(),
+                TextColumn::make('loan_date')
+                    ->translateLabel()
+                    ->date(),
+                TextColumn::make('details_count')
+                    ->translateLabel()
+                    ->counts('details'),
             ])
             ->filters([
                 //

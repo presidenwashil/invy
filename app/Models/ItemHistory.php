@@ -1,19 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ItemHistory extends Model
+final class ItemHistory extends Model
 {
-
     public function item()
     {
         return $this->belongsTo(Item::class);
     }
-    
-    public function user()
+
+    public function staff()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Staff::class);
     }
 }

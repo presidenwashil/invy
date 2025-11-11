@@ -1,18 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ReceivingResource\Pages;
-use App\Filament\Resources\ReceivingResource\RelationManagers;
-use App\Models\OrderDetail;
 use App\Models\Receiving;
 use Awcodes\TableRepeater\Components\TableRepeater;
 use Awcodes\TableRepeater\Header;
-use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -20,109 +17,85 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ReceivingResource extends Resource
+final class ReceivingResource extends Resource
 {
     protected static ?string $model = Receiving::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-truck';
 
+    public static function getModelLabel(): string
+    {
+        return __('Receiving');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Receivings');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('receiving_number')
+                TextInput::make('receiving_number')
+                    ->translateLabel()
                     ->required()
                     ->default(function () {
                         $today = now()->format('Ymd');
-                        $prefix = 'PNM' . $today;
+                        $prefix = 'PNM'.$today;
 
                         $latest = Receiving::whereDate('created_at', now())
-                            ->where('receiving_number', 'like', $prefix . '%')
+                            ->where('receiving_number', 'like', $prefix.'%')
                             ->latest('id')
                             ->first();
 
                         $lastNumber = $latest
-                            ? (int) substr($latest->receiving_number, -3)
+                            ? (int) mb_substr($latest->receiving_number, -3)
                             : 0;
 
-                        return $prefix . str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
+                        return $prefix.mb_str_pad((string) ($lastNumber + 1), 3, '0', STR_PAD_LEFT);
                     })
                     ->readonly(),
-                Select::make('order_id')
-                    ->relationship('order', 'order_number')
-                    ->searchable()
-                    ->preload()
-                    ->required()
-                    ->reactive()
-                    ->afterStateUpdated(function ($state, callable $set) {
-                        // Ambil detail dari order terpilih
-                        $order = \App\Models\Order::with('details.item')->find($state);
-
-                        if (!$order) {
-                            $set('details', []);
-                            return;
-                        }
-
-                        $details = $order->details->map(function ($detail) {
-                            return [
-                                'item_id' => $detail->item_id,
-                                'quantity' => $detail->quantity,
-                            ];
-                        })->toArray();
-
-                        // Isi field details (Repeater)
-                        $set('details', $details);
-                    }),
                 DatePicker::make('received_date')
+                    ->translateLabel()
                     ->default(now())
                     ->required(),
-                Select::make('user_id')
-                    ->relationship('user', 'name')
-                    ->default(auth()->id())
-                    ->disabled()
-                    ->dehydrated(true)
+                Select::make('staff_id')
+                    ->translateLabel()
+                    ->label(__('Received by'))
+                    ->relationship('staff', 'name')
+                    ->preload()
+                    ->searchable()
                     ->required(),
                 FileUpload::make('proof_file')
-                    ->label('Upload Bukti Penerimaan')
+                    ->translateLabel()
                     ->directory('receiving-proofs')
                     ->preserveFilenames()
                     ->downloadable(),
                 Textarea::make('note')
-                    ->label('Catatan')
+                    ->translateLabel()
                     ->nullable(),
                 TableRepeater::make('details')
-                    ->label('Detail Barang')
+                    ->label(__('Receiving details'))
                     ->headers([
-                        Header::make('item'),
-                        Header::make('quantity'),
+                        Header::make(__('Item')),
+                        Header::make(__('Quantity')),
                     ])
                     ->relationship()
                     ->schema([
                         Select::make('item_id')
-                            ->label('Barang')
-                            ->disabled()
-                            ->dehydrated(true)
-                            ->relationship('item', 'name'),
+                            ->translateLabel()
+                            ->relationship('item', 'name')
+                            ->preload()
+                            ->searchable(),
 
                         TextInput::make('quantity')
+                            ->translateLabel()
                             ->label('Jumlah Diterima')
                             ->numeric()
                             ->required(),
                     ])
-                    ->default(function (callable $get) {
-                        $order = \App\Models\Order::with('details.item')->find($get('order_id'));
-                        if (!$order) return [];
-
-                        return $order->details->map(function ($detail) {
-                            return [
-                                'item_id' => $detail->id,
-                                'quantity' => $detail->quantity,
-                            ];
-                        })->toArray();
-                    })
                     ->required()
                     ->columnSpan('full'),
             ]);
@@ -132,10 +105,15 @@ class ReceivingResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('receiving_number')->searchable(),
-                Tables\Columns\TextColumn::make('order.order_number'),
-                Tables\Columns\TextColumn::make('received_date')->date(),
-                Tables\Columns\TextColumn::make('user.name'),
+                Tables\Columns\TextColumn::make('receiving_number')
+                    ->translateLabel()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('received_date')
+                    ->translateLabel()
+                    ->date(),
+                Tables\Columns\TextColumn::make('staff.name')
+                    ->label(__('Received by'))
+                    ->searchable(),
             ])
             ->filters([])
             ->actions([

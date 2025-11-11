@@ -1,19 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Category;
-use App\Models\Supplier;
-use App\Models\Unit;
 use App\Models\Item;
+use App\Models\Staff;
+use App\Models\Unit;
 use App\Models\User;
+use App\Models\Warehouse;
+use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+final class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        
+
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
@@ -42,43 +45,6 @@ class DatabaseSeeder extends Seeder
             Unit::create($unit);
         }
 
-        // Seed Suppliers
-        $suppliers = [
-            [
-                'code' => 'SUP001',
-                'name' => 'PD Dongoran',
-                'contact' => '+62 (48) 456-3137',
-                'address' => 'Jalan Raya Setiabudhi No. 8, Banjar, SB 31897'
-            ],
-            [
-                'code' => 'SUP002',
-                'name' => 'UD Mandasari (Persero) Tbk',
-                'contact' => '+62-800-027-8010',
-                'address' => 'Jl. Sentot Alibasa No. 240, Dumai, KT 22891'
-            ],
-            [
-                'code' => 'SUP003',
-                'name' => 'PT Nasyidah',
-                'contact' => '+62-0494-437-5051',
-                'address' => 'Jl. Cikapayang No. 6, Pagaralam, JI 31146'
-            ],
-            [
-                'code' => 'SUP004',
-                'name' => 'Perum Purnawati Kuswoyo (Persero) Tbk',
-                'contact' => '+62 (0632) 431-7209',
-                'address' => 'Jl. Dipatiukur No. 8, Medan, NB 36691'
-            ],
-            [
-                'code' => 'SUP005',
-                'name' => 'Perum Riyanti',
-                'contact' => '+62 (055) 648 3700',
-                'address' => 'Jalan K.H. Wahid Hasyim No. 0, Singkawang, JT 80415'
-            ],
-        ];
-        foreach ($suppliers as $supplier) {
-            Supplier::create($supplier);
-        }
-
         // Seed Items
         $items = [
             [
@@ -87,7 +53,7 @@ class DatabaseSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 2,
                 'price' => 1500000,
-                'stock' => 0
+                'stock' => 0,
             ],
             [
                 'code' => 'ITM002',
@@ -95,7 +61,7 @@ class DatabaseSeeder extends Seeder
                 'category_id' => 2,
                 'unit_id' => 3,
                 'price' => 50000,
-                'stock' => 0
+                'stock' => 0,
             ],
             [
                 'code' => 'ITM003',
@@ -103,7 +69,7 @@ class DatabaseSeeder extends Seeder
                 'category_id' => 3,
                 'unit_id' => 1,
                 'price' => 750000,
-                'stock' => 0
+                'stock' => 0,
             ],
             [
                 'code' => 'ITM004',
@@ -111,7 +77,7 @@ class DatabaseSeeder extends Seeder
                 'category_id' => 4,
                 'unit_id' => 5,
                 'price' => 30000,
-                'stock' => 0
+                'stock' => 0,
             ],
             [
                 'code' => 'ITM005',
@@ -119,11 +85,45 @@ class DatabaseSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 2,
                 'price' => 250000,
-                'stock' => 0
+                'stock' => 0,
             ],
         ];
         foreach ($items as $item) {
             Item::create($item);
+        }
+
+        // Seed Staffs
+        $staffs = [
+            [
+                'nip' => '197412142007011010',
+                'name' => 'Fadliansyah',
+                'position' => 'Pengurus Barang Pembantu',
+            ],
+            [
+                'nip' => '198501012010011001',
+                'name' => 'Rina Sari',
+                'position' => 'Pengurus Barang Utama',
+            ],
+        ];
+        foreach ($staffs as $staff) {
+            Staff::create($staff);
+        }
+
+        // Seeds Warehouse
+        $warehouses = [
+            [
+                'code' => 'WH001',
+                'name' => 'Ruang IT',
+                'location' => 'Lantai 1',
+            ],
+            [
+                'code' => 'WH002',
+                'name' => 'Ruang Publikasi & Dokumentasi',
+                'location' => 'Lantai 1',
+            ],
+        ];
+        foreach ($warehouses as $warehouse) {
+            Warehouse::create($warehouse);
         }
     }
 }

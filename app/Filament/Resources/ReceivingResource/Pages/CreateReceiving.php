@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\ReceivingResource\Pages;
 
 use App\Filament\Resources\ReceivingResource;
 use App\Models\ItemHistory;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
-class CreateReceiving extends CreateRecord
+final class CreateReceiving extends CreateRecord
 {
     protected static string $resource = ReceivingResource::class;
 
@@ -22,14 +23,12 @@ class CreateReceiving extends CreateRecord
 
             ItemHistory::create([
                 'item_id' => $item->id,
-                'user_id' => auth()->id(),
+                'staff_id' => $this->record->staff_id,
                 'type' => 'receiving',
                 'initial_stock' => $initialStock,
                 'in' => $detail->quantity,
                 'out' => 0,
             ]);
         }
-
-        $this->record->order?->update(['status' => 'completed']);
     }
 }
