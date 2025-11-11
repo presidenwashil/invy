@@ -13,13 +13,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('receivings', function (Blueprint $table) {
-            $table->id();
-            $table->string('receiving_number')->unique();
-            $table->date('received_date');
-            $table->text('note')->nullable();
-            $table->string('proof_file')->nullable();
-            $table->timestamps();
+        Schema::table('items', function (Blueprint $table) {
+            $table->foreignId('unit_id')->after('category_id')->constrained('units')->onDelete('cascade');
         });
     }
 
@@ -28,6 +23,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('receivings');
+        Schema::table('items', function (Blueprint $table) {
+            $table->dropForeign(['unit_id']);
+            $table->dropColumn('unit_id');
+        });
     }
 };

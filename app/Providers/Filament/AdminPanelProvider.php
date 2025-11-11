@@ -32,7 +32,9 @@ final class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('')
-            ->darkMode(false)
+            ->brandLogo(asset('images/logo.png'))
+            ->darkModeBrandLogo(asset('images/darkmode-logo.png'))
+            ->brandLogoHeight('3rem')
             ->login()
             ->spa()
             ->navigationGroups([
