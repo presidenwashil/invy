@@ -22,7 +22,7 @@
 </head>
 <body>
 
-    <img src="{{ public_path('images/kop-surat.png') }}" class="kop" alt="Kop Surat">
+    <img src="{{ asset('images/kop-surat.png') }}" class="kop" alt="Kop Surat">
 
     <div class="title">
         BERITA ACARA SERAH TERIMA BARANG<br>
@@ -134,5 +134,10 @@
         </tr>
     </table>
 
+    <script>
+        window.onload = function() {
+            window.print();
+        };
+    </script>
 </body>
 </html>
