@@ -28,8 +28,6 @@ final class ListHandoverPdfController extends Controller
 
         $handovers = $query->get();
 
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.list-handover', compact('handovers'));
-
-        return $pdf->stream('list-handover.pdf');
+        return view('pdf.list-handover', compact('handovers'));
     }
 }

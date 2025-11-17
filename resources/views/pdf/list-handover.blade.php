@@ -22,7 +22,7 @@
 </head>
 <body>
 
-    <img src="{{ public_path('images/kop-surat.png') }}" class="kop" alt="Kop Surat">
+    <img src="{{ asset('images/kop-surat.png') }}" class="kop" alt="Kop Surat">
 
     <div class="title">
         @if(request('tableFilters.month.value'))
@@ -58,5 +58,10 @@
         </tbody>
     </table>
 
+    <script>
+        window.onload = function() {
+            window.print();
+        };
+    </script>
 </body>
 </html>
