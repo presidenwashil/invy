@@ -128,5 +128,7 @@ final class DatabaseSeeder extends Seeder
 
         // Permissions
         $this->call(ShieldSeeder::class);
+
+        User::find(1)?->assignRole('super_admin');
     }
 }

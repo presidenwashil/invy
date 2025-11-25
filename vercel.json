@@ -26,7 +26,6 @@
         "APP_ROUTES_CACHE": "/tmp/routes.php",
         "APP_SERVICES_CACHE": "/tmp/services.php",
         "CACHE_DRIVER": "array",
-        "FILESYSTEM_DISK": "dropbox",
         "LOG_CHANNEL": "stderr",
         "SESSION_DRIVER": "database",
         "VIEW_COMPILED_PATH": "/tmp/views",
