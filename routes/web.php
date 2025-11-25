@@ -12,3 +12,7 @@ Route::get('/handover/pdf', App\Http\Controllers\ListHandoverPdfController::clas
 Route::get('/test-vercel-storage', function () {
     dd(Storage::disk('r2')->put('test.txt', 'hello'));
 });
+
+Route::get('/debug-tmp', function () {
+    return config('livewire.temporary_file_upload.disk');
+});
