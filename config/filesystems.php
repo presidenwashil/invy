@@ -71,6 +71,14 @@ return [
             'endpoint' => env('R2_ENDPOINT'),
             'use_path_style_endpoint' => true,
         ],
+
+        'tmp' => [
+            'driver' => 'local',
+            'root' => '/tmp',
+            'url' => env('APP_URL').'/tmp',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
     ],
 
     /*
