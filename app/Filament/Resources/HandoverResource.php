@@ -58,10 +58,8 @@ final class HandoverResource extends Resource
                 Forms\Components\FileUpload::make('proof_file')
                     ->translateLabel()
                     ->disk('r2')
-                    ->visibility('public')
                     ->directory('receiving-proofs')
-                    ->preserveFilenames()
-                    ->downloadable(),
+                    ->preserveFilenames(),
             ]);
     }
 

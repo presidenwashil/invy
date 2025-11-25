@@ -77,9 +77,7 @@ final class ReceivingResource extends Resource
                     ->translateLabel()
                     ->directory('receiving-proofs')
                     ->disk('r2')
-                    ->visibility('public')
-                    ->preserveFilenames()
-                    ->downloadable(),
+                    ->preserveFilenames(),
                 Textarea::make('note')
                     ->translateLabel()
                     ->nullable(),
