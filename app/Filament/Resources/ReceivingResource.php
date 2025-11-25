@@ -76,6 +76,8 @@ final class ReceivingResource extends Resource
                 FileUpload::make('proof_file')
                     ->translateLabel()
                     ->directory('receiving-proofs')
+                    ->disk('r2')
+                    ->visibility('public')
                     ->preserveFilenames()
                     ->downloadable(),
                 Textarea::make('note')
