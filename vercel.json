@@ -29,6 +29,7 @@
         "LOG_CHANNEL": "stderr",
         "SESSION_DRIVER": "database",
         "VIEW_COMPILED_PATH": "/tmp/views",
+        "VERCEL_STORAGE_PATH": "/tmp/storage",
         "NODE_PATH": "node"
     }
 }
