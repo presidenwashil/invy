@@ -34,6 +34,23 @@ final class AppServiceProvider extends ServiceProvider
 
         App::useStoragePath(env('VERCEL_STORAGE_PATH', '/tmp/storage'));
 
+        $directories = [
+            'app',
+            'framework/cache/data',
+            'framework/sessions',
+            'framework/views',
+            'framework/testing',
+            'logs',
+        ];
+
+        foreach ($directories as $directory) {
+            $path = storage_path($directory);
+
+            if (! is_dir($path)) {
+                mkdir($path, 0755, true);
+            }
+        }
+
         $view = config('view.compiled');
 
         if (! is_dir($view)) {
