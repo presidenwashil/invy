@@ -75,7 +75,9 @@ final class ReceivingResource extends Resource
                     ->required(),
                 FileUpload::make('proof_file')
                     ->translateLabel()
-                    ->disk('r2'),
+                    ->disk('r2')
+                    ->visibility('public')
+                    ->downloadable(),
                 Textarea::make('note')
                     ->translateLabel()
                     ->nullable(),

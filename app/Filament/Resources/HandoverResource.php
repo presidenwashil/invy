@@ -57,7 +57,9 @@ final class HandoverResource extends Resource
                     ->required(),
                 Forms\Components\FileUpload::make('proof_file')
                     ->translateLabel()
-                    ->disk('r2'),
+                    ->disk('r2')
+                    ->visibility('public')
+                    ->downloadable(),
             ]);
     }
 
