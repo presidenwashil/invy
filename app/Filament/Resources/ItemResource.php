@@ -59,6 +59,8 @@ final class ItemResource extends Resource
                 Forms\Components\Select::make('category_id')
                     ->translateLabel()
                     ->relationship('category', 'name')
+                    ->preload()
+                    ->searchable()
                     ->required(),
                 Forms\Components\TextInput::make('stock')
                     ->translateLabel()

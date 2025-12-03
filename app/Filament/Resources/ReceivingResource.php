@@ -61,18 +61,21 @@ final class ReceivingResource extends Resource
 
                         return $prefix.mb_str_pad((string) ($lastNumber + 1), 3, '0', STR_PAD_LEFT);
                     })
+                    ->disabled(fn ($livewire) => $livewire instanceof \Filament\Resources\Pages\EditRecord)
                     ->readonly(),
                 DatePicker::make('received_date')
                     ->translateLabel()
                     ->default(now())
-                    ->required(),
+                    ->required()
+                    ->disabled(fn ($livewire) => $livewire instanceof \Filament\Resources\Pages\EditRecord),
                 Select::make('staff_id')
                     ->translateLabel()
                     ->label(__('Received by'))
                     ->relationship('staff', 'name')
                     ->preload()
                     ->searchable()
-                    ->required(),
+                    ->required()
+                    ->disabled(fn ($livewire) => $livewire instanceof \Filament\Resources\Pages\EditRecord),
                 FileUpload::make('proof_file')
                     ->translateLabel()
                     ->disk('r2')
@@ -93,13 +96,15 @@ final class ReceivingResource extends Resource
                             ->translateLabel()
                             ->relationship('item', 'name')
                             ->preload()
-                            ->searchable(),
+                            ->searchable()
+                            ->disabled(fn ($livewire) => $livewire instanceof \Filament\Resources\Pages\EditRecord),
 
                         TextInput::make('quantity')
                             ->translateLabel()
                             ->label('Jumlah Diterima')
                             ->numeric()
-                            ->required(),
+                            ->required()
+                            ->disabled(fn ($livewire) => $livewire instanceof \Filament\Resources\Pages\EditRecord),
                     ])
                     ->required()
                     ->columnSpan('full'),
@@ -109,18 +114,53 @@ final class ReceivingResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('received_date', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('receiving_number')
                     ->translateLabel()
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('received_date')
                     ->translateLabel()
-                    ->date(),
+                    ->date()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('staff.name')
                     ->label(__('Received by'))
                     ->searchable(),
             ])
-            ->filters([])
+            ->filters([
+                Tables\Filters\Filter::make('date_range')
+                    ->form([
+                        DatePicker::make('from')
+                            ->label(__('From'))
+                            ->native(false),
+                        DatePicker::make('until')
+                            ->label(__('Until'))
+                            ->native(false),
+                    ])
+                    ->query(function ($query, array $data) {
+                        return $query
+                            ->when(
+                                $data['from'],
+                                fn ($query) => $query->whereDate('received_date', '>=', $data['from'])
+                            )
+                            ->when(
+                                $data['until'],
+                                fn ($query) => $query->whereDate('received_date', '<=', $data['until'])
+                            );
+                    })
+                    ->indicateUsing(function (array $data): array {
+                        $indicators = [];
+                        if ($data['from'] ?? null) {
+                            $indicators['from'] = __('From').': '.$data['from'];
+                        }
+                        if ($data['until'] ?? null) {
+                            $indicators['until'] = __('Until').': '.$data['until'];
+                        }
+
+                        return $indicators;
+                    }),
+            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])

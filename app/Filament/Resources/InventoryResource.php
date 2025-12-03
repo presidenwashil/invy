@@ -14,6 +14,8 @@ use Filament\Tables\Table;
 
 final class InventoryResource extends Resource
 {
+    private const CODE_PREFIX = 'INV';
+
     protected static ?string $model = Inventory::class;
 
     protected static ?int $navigationSort = 1;
@@ -39,7 +41,13 @@ final class InventoryResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('inventory_number')
                     ->translateLabel()
-                    ->required(),
+                    ->required()
+                    ->default(fn () => self::generateInventoryCode())
+                    ->afterStateHydrated(function (Forms\Components\TextInput $component, ?string $state, Forms\Set $set) {
+                        if (blank($state)) {
+                            $set('inventory_number', self::generateInventoryCode());
+                        }
+                    }),
                 Forms\Components\Select::make('item_id')
                     ->label(__('Item'))
                     ->required()
@@ -171,5 +179,22 @@ final class InventoryResource extends Resource
             'create' => Pages\CreateInventory::route('/create'),
             'edit' => Pages\EditInventory::route('/{record}/edit'),
         ];
+    }
+
+    protected static function generateInventoryCode(): string
+    {
+        /**
+         * INV + YYYYMMDD + 3 random digits
+         * the random digits based on the last of 3 digits from the column of inventory_number
+         */
+        $datePart = date('Ymd');
+        $lastInventory = Inventory::where('inventory_number', 'like', self::CODE_PREFIX.$datePart.'%')
+            ->orderBy('inventory_number', 'desc')
+            ->first();
+
+        $randomPart = $lastInventory ? (int) mb_substr($lastInventory->inventory_number, -3) + 1 : 1;
+        $randomPart = mb_str_pad((string) $randomPart, 3, '0', STR_PAD_LEFT);
+
+        return self::CODE_PREFIX.$datePart.$randomPart;
     }
 }
