@@ -17,6 +17,10 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 final class ItemResource extends Resource
 {
+    private const CODE_PREFIX = 'BRG';
+
+    private const CODE_NUMBER_LENGTH = 8;
+
     protected static ?string $model = Item::class;
 
     protected static ?int $navigationSort = 3;
@@ -155,8 +159,9 @@ final class ItemResource extends Resource
     protected static function generateItemCode(): string
     {
         $lastItem = Item::withTrashed()->orderByDesc('id')->first();
-        $nextNumber = $lastItem ? ((int) mb_substr($lastItem->code, 3)) + 1 : 1;
+        $prefixLength = mb_strlen(self::CODE_PREFIX);
+        $nextNumber = $lastItem ? ((int) mb_substr($lastItem->code, $prefixLength)) + 1 : 1;
 
-        return 'BRG'.mb_str_pad((string) $nextNumber, 8, '0', STR_PAD_LEFT);
+        return self::CODE_PREFIX.mb_str_pad((string) $nextNumber, self::CODE_NUMBER_LENGTH, '0', STR_PAD_LEFT);
     }
 }
