@@ -1,14 +1,12 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Policies;
 
-use App\Models\ItemHistory;
 use App\Models\User;
+use App\Models\ItemHistory;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-final class ItemHistoryPolicy
+class ItemHistoryPolicy
 {
     use HandlesAuthorization;
 

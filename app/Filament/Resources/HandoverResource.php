@@ -66,6 +66,7 @@ final class HandoverResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('handover_date', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('staff.nip')
                     ->label(__('NIP'))

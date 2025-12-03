@@ -1,14 +1,12 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Policies;
 
-use App\Models\Receiving;
 use App\Models\User;
+use App\Models\Receiving;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-final class ReceivingPolicy
+class ReceivingPolicy
 {
     use HandlesAuthorization;
 

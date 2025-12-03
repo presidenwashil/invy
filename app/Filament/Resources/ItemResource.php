@@ -8,6 +8,7 @@ use App\Filament\Resources\ItemResource\Pages;
 use App\Models\Item;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -17,6 +18,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 final class ItemResource extends Resource
 {
     protected static ?string $model = Item::class;
+
+    protected static ?int $navigationSort = 3;
 
     public static function getNavigationGroup(): string
     {
@@ -39,7 +42,13 @@ final class ItemResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('code')
                     ->translateLabel()
-                    ->required(),
+                    ->required()
+                    ->default(fn () => self::generateItemCode())
+                    ->afterStateHydrated(function (Forms\Components\TextInput $component, ?string $state, Set $set) {
+                        if (blank($state)) {
+                            $set('code', self::generateItemCode());
+                        }
+                    }),
                 Forms\Components\TextInput::make('name')
                     ->translateLabel()
                     ->required(),
@@ -53,11 +62,6 @@ final class ItemResource extends Resource
                     ->numeric()
                     ->readOnly()
                     ->default(0),
-                Forms\Components\TextInput::make('price')
-                    ->translateLabel()
-                    ->required()
-                    ->numeric()
-                    ->prefix('Rp.'),
                 Forms\Components\Toggle::make('status')
                     ->required(),
                 Forms\Components\Select::make('unit_id')
@@ -85,10 +89,6 @@ final class ItemResource extends Resource
                 Tables\Columns\TextColumn::make('stock')
                     ->translateLabel()
                     ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('price')
-                    ->translateLabel()
-                    ->money('IDR')
                     ->sortable(),
                 Tables\Columns\IconColumn::make('status')
                     ->translateLabel()
@@ -150,5 +150,13 @@ final class ItemResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+    }
+
+    protected static function generateItemCode(): string
+    {
+        $lastItem = Item::withTrashed()->orderByDesc('id')->first();
+        $nextNumber = $lastItem ? ((int) mb_substr($lastItem->code, 3)) + 1 : 1;
+
+        return 'BRG'.mb_str_pad((string) $nextNumber, 8, '0', STR_PAD_LEFT);
     }
 }

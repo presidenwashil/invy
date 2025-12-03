@@ -1,14 +1,12 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Policies;
 
-use App\Models\Unit;
 use App\Models\User;
+use App\Models\Unit;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-final class UnitPolicy
+class UnitPolicy
 {
     use HandlesAuthorization;
 

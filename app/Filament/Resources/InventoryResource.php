@@ -84,11 +84,11 @@ final class InventoryResource extends Resource
                 Forms\Components\Select::make('status')
                     ->required()
                     ->options([
-                        'available' => 'Available',
-                        'damaged' => 'Damaged',
-                        'lost' => 'Lost',
-                        'borrowed' => 'Borrowed',
-                        'maintanance' => 'Maintanance',
+                        'available' => __('Available'),
+                        'damaged' => __('Damaged'),
+                        'lost' => __('Lost'),
+                        'borrowed' => __('Borrowed'),
+                        'maintanance' => __('Maintenance'),
                     ])
                     ->default('available')
                     ->preload()
@@ -112,6 +112,14 @@ final class InventoryResource extends Resource
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'available' => __('Available'),
+                        'damaged' => __('Damaged'),
+                        'lost' => __('Lost'),
+                        'borrowed' => __('Borrowed'),
+                        'maintanance' => __('Maintenance'),
+                        default => $state,
+                    })
                     ->searchable(),
                 Tables\Columns\TextColumn::make('serial_number')
                     ->translateLabel()

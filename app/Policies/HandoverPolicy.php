@@ -1,14 +1,12 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Policies;
 
-use App\Models\Handover;
 use App\Models\User;
+use App\Models\Handover;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-final class HandoverPolicy
+class HandoverPolicy
 {
     use HandlesAuthorization;
 
