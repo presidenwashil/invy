@@ -18,6 +18,8 @@ final class UnitResource extends Resource
 {
     protected static ?string $model = Unit::class;
 
+    protected static ?int $navigationSort = 2;
+
     public static function getNavigationGroup(): string
     {
         return __('Masters');
