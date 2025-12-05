@@ -6,6 +6,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property-read Collection<int, LoanDetail> $details
@@ -14,17 +16,26 @@ use Illuminate\Database\Eloquent\Model;
  */
 final class Loan extends Model
 {
-    public function details()
+    /**
+     * @return HasMany<LoanDetail, $this>
+     */
+    public function details(): HasMany
     {
         return $this->hasMany(LoanDetail::class);
     }
 
-    public function staff()
+    /**
+     * @return BelongsTo<Staff, $this>
+     */
+    public function staff(): BelongsTo
     {
         return $this->belongsTo(Staff::class);
     }
 
-    public function warehouse()
+    /**
+     * @return BelongsTo<Warehouse, $this>
+     */
+    public function warehouse(): BelongsTo
     {
         return $this->belongsTo(Warehouse::class);
     }
