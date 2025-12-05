@@ -64,8 +64,10 @@
         ],
         "lint": "pint",
         "test:lint": "pint --test",
+        "test:types": "vendor/bin/phpstan analyse",
         "test": [
-            "@test:lint"
+            "@test:lint",
+            "@test:types"
         ]
     },
     "extra": {
