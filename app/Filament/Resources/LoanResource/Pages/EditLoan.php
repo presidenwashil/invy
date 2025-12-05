@@ -18,8 +18,8 @@ final class EditLoan extends EditRecord
         // apabila setiap detail loan status peminjamannya berubah menjadi returned,
         // maka update status inventory menjadi available
 
-        if ($this->record->details->every(fn ($detail) => $detail->loan_status === 'returned')) {
-            $this->record->details->each(fn ($detail) => $detail->inventory->update([
+        if ($this->getRecord()->details->every(fn ($detail) => $detail->loan_status === 'returned')) {
+            $this->getRecord()->details->each(fn ($detail) => $detail->inventory->update([
                 'status' => 'available',
             ]));
         }
