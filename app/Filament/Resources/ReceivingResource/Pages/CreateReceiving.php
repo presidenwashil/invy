@@ -6,9 +6,11 @@ namespace App\Filament\Resources\ReceivingResource\Pages;
 
 use App\Filament\Resources\ReceivingResource;
 use App\Models\ItemHistory;
-use Filament\Resources\Pages\CreateRecord;
 
-final class CreateReceiving extends CreateRecord
+/**
+ * @extends \App\Filament\Pages\BaseCreateRecord<\App\Models\Receiving>
+ */
+final class CreateReceiving extends \App\Filament\Pages\BaseCreateRecord
 {
     protected static string $resource = ReceivingResource::class;
 

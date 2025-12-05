@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 final class Category extends Model
 {
-    /** @use HasFactory<\Database\Factories\CategoryFactory> */
+    /** @use HasFactory<\\Database\\Factories\\CategoryFactory> */
     use HasFactory;
 
     use SoftDeletes;

@@ -6,9 +6,11 @@ namespace App\Filament\Resources\LoanResource\Pages;
 
 use App\Filament\Resources\LoanResource;
 use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
 
-final class EditLoan extends EditRecord
+/**
+ * @extends \App\Filament\Pages\BaseEditRecord<\App\Models\Loan>
+ */
+final class EditLoan extends \App\Filament\Pages\BaseEditRecord
 {
     protected static string $resource = LoanResource::class;
 
