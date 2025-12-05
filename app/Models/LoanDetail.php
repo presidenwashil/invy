@@ -5,15 +5,22 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 final class LoanDetail extends Model
 {
-    public function loan()
+    /**
+     * @return BelongsTo<Loan, $this>
+     */
+    public function loan(): BelongsTo
     {
         return $this->belongsTo(Loan::class);
     }
 
-    public function inventory()
+    /**
+     * @return BelongsTo<Inventory, $this>
+     */
+    public function inventory(): BelongsTo
     {
         return $this->belongsTo(Inventory::class);
     }

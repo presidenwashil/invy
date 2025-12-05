@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 final class Transaction extends Model
@@ -13,22 +14,31 @@ final class Transaction extends Model
     /** @use HasFactory<\Database\Factories\TransactionFactory> */
     use HasFactory;
 
-    public function item()
+    /**
+     * @return BelongsTo<Item, $this>
+     */
+    public function item(): BelongsTo
     {
         return $this->belongsTo(Item::class);
     }
 
-    public function warehouse()
+    /**
+     * @return BelongsTo<Warehouse, $this>
+     */
+    public function warehouse(): BelongsTo
     {
         return $this->belongsTo(Warehouse::class);
     }
 
-    public function user()
+    /**
+     * @return BelongsTo<User, $this>
+     */
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
