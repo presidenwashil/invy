@@ -18,7 +18,7 @@ final class EditHandover extends EditRecord
             Actions\Action::make('exportPdf')
                 ->label('Export PDF')
                 ->icon('heroicon-o-document-text')
-                ->url(fn () => route('handover.pdf', ['record' => $this->record->id]))
+                ->url(fn () => route('handover.pdf', ['record' => $this->getRecord()->id]))
                 ->openUrlInNewTab(),
             Actions\DeleteAction::make(),
             Actions\ForceDeleteAction::make(),
