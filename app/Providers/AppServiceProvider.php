@@ -32,7 +32,7 @@ final class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
-        App::useStoragePath(env('VERCEL_STORAGE_PATH', '/tmp/storage'));
+        App::useStoragePath(config('app.storage_path'));
 
         $directories = [
             'app',

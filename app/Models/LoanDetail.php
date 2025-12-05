@@ -6,6 +6,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property-read Loan|null $loan
+ * @property-read Inventory|null $inventory
+ */
 final class LoanDetail extends Model
 {
     public function loan()

@@ -6,6 +6,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $quantity
+ * @property-read Item|null $item
+ */
 final class ReceivingDetail extends Model
 {
     public function item()
