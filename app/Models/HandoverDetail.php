@@ -5,15 +5,22 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 final class HandoverDetail extends Model
 {
-    public function handover()
+    /**
+     * @return BelongsTo<Handover, $this>
+     */
+    public function handover(): BelongsTo
     {
         return $this->belongsTo(Handover::class);
     }
 
-    public function inventory()
+    /**
+     * @return BelongsTo<Inventory, $this>
+     */
+    public function inventory(): BelongsTo
     {
         return $this->belongsTo(Inventory::class);
     }
