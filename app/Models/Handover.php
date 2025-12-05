@@ -4,11 +4,18 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property int $id
+ * @property int|null $staff_id
+ * @property-read Collection<int, HandoverDetail> $details
+ * @property-read Staff|null $staff
+ */
 final class Handover extends Model
 {
     use SoftDeletes;

@@ -6,9 +6,11 @@ namespace App\Filament\Resources\HandoverResource\Pages;
 
 use App\Filament\Resources\HandoverResource;
 use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
 
-final class EditHandover extends EditRecord
+/**
+ * @extends \App\Filament\Pages\BaseEditRecord<\App\Models\Handover>
+ */
+final class EditHandover extends \App\Filament\Pages\BaseEditRecord
 {
     protected static string $resource = HandoverResource::class;
 
