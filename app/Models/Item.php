@@ -4,10 +4,19 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property int $id
+ * @property int $stock
+ * @property-read Category|null $category
+ * @property-read Collection<int, Transaction> $transactions
+ * @property-read Unit|null $unit
+ * @property-read Collection<int, Warehouse> $warehouses
+ */
 final class Item extends Model
 {
     /** @use HasFactory<\Database\Factories\ItemFactory> */

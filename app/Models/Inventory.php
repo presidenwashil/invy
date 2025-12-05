@@ -6,6 +6,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property string $status
+ * @property-read Item|null $item
+ * @property-read Staff|null $staff
+ * @property-read Warehouse|null $warehouse
+ */
 final class Inventory extends Model
 {
     public function item()
