@@ -82,9 +82,11 @@ final class ItemResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('code', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('code')
                     ->translateLabel()
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('name')
                     ->translateLabel()
