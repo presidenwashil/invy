@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Filament\Resources\LoanResource\Pages;
 
 use App\Filament\Resources\LoanResource;
-use Filament\Resources\Pages\CreateRecord;
 
-final class CreateLoan extends CreateRecord
+/**
+ * @extends \App\Filament\Pages\BaseCreateRecord<\App\Models\Loan>
+ */
+final class CreateLoan extends \App\Filament\Pages\BaseCreateRecord
 {
     protected static string $resource = LoanResource::class;
 

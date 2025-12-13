@@ -125,4 +125,17 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Custom Storage Path
+    |--------------------------------------------------------------------------
+    |
+    | This value is used to set a custom storage path for the application,
+    | primarily used for Vercel deployments where the storage directory
+    | needs to be in a writable location like /tmp.
+    |
+    */
+
+    'storage_path' => env('VERCEL_STORAGE_PATH', '/tmp/storage'),
+
 ];

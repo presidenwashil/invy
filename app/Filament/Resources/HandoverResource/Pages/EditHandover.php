@@ -6,9 +6,11 @@ namespace App\Filament\Resources\HandoverResource\Pages;
 
 use App\Filament\Resources\HandoverResource;
 use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
 
-final class EditHandover extends EditRecord
+/**
+ * @extends \App\Filament\Pages\BaseEditRecord<\App\Models\Handover>
+ */
+final class EditHandover extends \App\Filament\Pages\BaseEditRecord
 {
     protected static string $resource = HandoverResource::class;
 
@@ -18,7 +20,7 @@ final class EditHandover extends EditRecord
             Actions\Action::make('exportPdf')
                 ->label('Export PDF')
                 ->icon('heroicon-o-document-text')
-                ->url(fn () => route('handover.pdf', ['record' => $this->record->id]))
+                ->url(fn () => route('handover.pdf', ['record' => $this->getRecord()->id]))
                 ->openUrlInNewTab(),
             Actions\DeleteAction::make(),
             Actions\ForceDeleteAction::make(),

@@ -4,24 +4,42 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property int $id
+ * @property int|null $staff_id
+ * @property-read Collection<int, HandoverDetail> $details
+ * @property-read Staff|null $staff
+ */
 final class Handover extends Model
 {
     use SoftDeletes;
 
-    public function staff()
+    /**
+     * @return BelongsTo<Staff, $this>
+     */
+    public function staff(): BelongsTo
     {
         return $this->belongsTo(Staff::class, 'staff_id');
     }
 
-    public function details()
+    /**
+     * @return HasMany<HandoverDetail, $this>
+     */
+    public function details(): HasMany
     {
         return $this->hasMany(HandoverDetail::class, 'handover_id');
     }
 
-    public function inventory()
+    /**
+     * @return BelongsTo<Inventory, $this>
+     */
+    public function inventory(): BelongsTo
     {
         return $this->belongsTo(Inventory::class, 'inventory_id');
     }

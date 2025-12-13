@@ -90,8 +90,8 @@ final class LoanResource extends Resource
                         Select::make('loan_status')
                             ->label('Status')
                             ->options([
-                                'loaned' => 'Dipinjam',
-                                'returned' => 'Dikembalikan',
+                                'loaned' => __('Loaned'),
+                                'returned' => __('Returned'),
                             ])
                             ->default('loaned')
                             ->required(),
@@ -103,6 +103,7 @@ final class LoanResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('loan_date', 'desc')
             ->columns([
                 TextColumn::make('warehouse.name')
                     ->translateLabel(),

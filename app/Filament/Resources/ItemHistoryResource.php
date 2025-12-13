@@ -6,6 +6,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ItemHistoryResource\Pages;
 use App\Models\ItemHistory;
+use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -43,6 +44,7 @@ final class ItemHistoryResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('item.name')
                     ->label(__('Item'))
@@ -54,6 +56,11 @@ final class ItemHistoryResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('type')
                     ->translateLabel()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'receiving' => __('Receiving'),
+                        'inventory' => __('Inventory'),
+                        default => $state,
+                    })
                     ->searchable(),
                 Tables\Columns\TextColumn::make('initial_stock')
                     ->translateLabel()
@@ -77,7 +84,37 @@ final class ItemHistoryResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\Filter::make('date_range')
+                    ->form([
+                        Forms\Components\DatePicker::make('from')
+                            ->label(__('From'))
+                            ->native(false),
+                        Forms\Components\DatePicker::make('until')
+                            ->label(__('Until'))
+                            ->native(false),
+                    ])
+                    ->query(function ($query, array $data) {
+                        return $query
+                            ->when(
+                                $data['from'],
+                                fn ($query) => $query->whereDate('created_at', '>=', $data['from'])
+                            )
+                            ->when(
+                                $data['until'],
+                                fn ($query) => $query->whereDate('created_at', '<=', $data['until'])
+                            );
+                    })
+                    ->indicateUsing(function (array $data): array {
+                        $indicators = [];
+                        if ($data['from'] ?? null) {
+                            $indicators['from'] = __('From').': '.$data['from'];
+                        }
+                        if ($data['until'] ?? null) {
+                            $indicators['until'] = __('Until').': '.$data['until'];
+                        }
+
+                        return $indicators;
+                    }),
             ]);
     }
 

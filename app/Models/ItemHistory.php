@@ -5,15 +5,22 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 final class ItemHistory extends Model
 {
-    public function item()
+    /**
+     * @return BelongsTo<Item, $this>
+     */
+    public function item(): BelongsTo
     {
         return $this->belongsTo(Item::class);
     }
 
-    public function staff()
+    /**
+     * @return BelongsTo<Staff, $this>
+     */
+    public function staff(): BelongsTo
     {
         return $this->belongsTo(Staff::class);
     }

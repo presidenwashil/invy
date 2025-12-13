@@ -48,43 +48,38 @@ final class DatabaseSeeder extends Seeder
         // Seed Items
         $items = [
             [
-                'code' => 'ITM001',
+                'code' => 'BRG00000001',
                 'name' => 'Printer Canon',
                 'category_id' => 1,
                 'unit_id' => 2,
-                'price' => 1500000,
                 'stock' => 0,
             ],
             [
-                'code' => 'ITM002',
+                'code' => 'BRG00000002',
                 'name' => 'Kertas A4',
                 'category_id' => 2,
                 'unit_id' => 3,
-                'price' => 50000,
                 'stock' => 0,
             ],
             [
-                'code' => 'ITM003',
+                'code' => 'BRG00000003',
                 'name' => 'Meja Kantor',
                 'category_id' => 3,
                 'unit_id' => 1,
-                'price' => 750000,
                 'stock' => 0,
             ],
             [
-                'code' => 'ITM004',
+                'code' => 'BRG00000004',
                 'name' => 'Sabun Pel Lantai',
                 'category_id' => 4,
                 'unit_id' => 5,
-                'price' => 30000,
                 'stock' => 0,
             ],
             [
-                'code' => 'ITM005',
+                'code' => 'BRG00000005',
                 'name' => 'Mouse Logitech',
                 'category_id' => 1,
                 'unit_id' => 2,
-                'price' => 250000,
                 'stock' => 0,
             ],
         ];

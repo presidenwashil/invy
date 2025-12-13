@@ -6,9 +6,11 @@ namespace App\Filament\Resources\LoanResource\Pages;
 
 use App\Filament\Resources\LoanResource;
 use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
 
-final class EditLoan extends EditRecord
+/**
+ * @extends \App\Filament\Pages\BaseEditRecord<\App\Models\Loan>
+ */
+final class EditLoan extends \App\Filament\Pages\BaseEditRecord
 {
     protected static string $resource = LoanResource::class;
 
@@ -18,8 +20,8 @@ final class EditLoan extends EditRecord
         // apabila setiap detail loan status peminjamannya berubah menjadi returned,
         // maka update status inventory menjadi available
 
-        if ($this->record->details->every(fn ($detail) => $detail->loan_status === 'returned')) {
-            $this->record->details->each(fn ($detail) => $detail->inventory->update([
+        if ($this->getRecord()->details->every(fn ($detail) => $detail->loan_status === 'returned')) {
+            $this->getRecord()->details->each(fn ($detail) => $detail->inventory->update([
                 'status' => 'available',
             ]));
         }
