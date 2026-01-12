@@ -59,6 +59,7 @@ final class ItemHistoryResource extends Resource
                     ->formatStateUsing(fn (string $state): string => match ($state) {
                         'receiving' => __('Receiving'),
                         'inventory' => __('Inventory'),
+                        'withdrawal' => __('Withdrawal'),
                         default => $state,
                     })
                     ->searchable(),
